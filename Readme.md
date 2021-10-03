@@ -1,5 +1,12 @@
 # Личный проект «Что посмотреть»
 
+---
+
+![example workflow](https://github.com/IrinaOvch/426323-what-to-watch-8/actions/workflows/check.yml/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/IrinaOvch/426323-what-to-watch-8)
+
+---
+
 * Студент: [Ирина Овчинникова](https://up.htmlacademy.ru/react/8/user/426323).
 * Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
@@ -47,7 +54,3 @@ git clone SSH-адрес_вашего_форка
 <a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
 
 Репозиторий создан для обучения на профессиональном онлайн‑курсе «[React. Разработка сложных клиентских приложений](https://htmlacademy.ru/intensive/react)» от [HTML Academy](https://htmlacademy.ru).
-
-
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/IrinaOvch/426323-what-to-watch-8)
