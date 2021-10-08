@@ -1,3 +1,5 @@
+import SignInButton from '../../components/sign-in-button/sign-in-button';
+
 function SignIn(): JSX.Element {
   return (
     <div className="sign-in user-page__content">
@@ -12,9 +14,7 @@ function SignIn(): JSX.Element {
             <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
           </div>
         </div>
-        <div className="sign-in__submit">
-          <button className="sign-in__btn" type="submit">Sign in</button>
-        </div>
+        <SignInButton/>
       </form>
     </div>
   );

@@ -1,14 +1,12 @@
-import Footer from '../footer/footer';
-import FilmCard from '../film-card/film-card';
-import Header from '../header/header';
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+import FilmsList from '../../components/films-list/films-list';
+import PlayButton from '../../components/play-button/play-button';
+import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
+import AddReviewButton from '../../components/add-review-button/add-review-button';
+import { Film } from '../../types/film/film';
 
-type FilmPageProps = {
-  title: string;
-  src: string;
-  id: number;
-}[]
-
-function FilmPage(films : FilmPageProps): JSX.Element {
+function FilmPage(films: Film[]): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full">
@@ -30,19 +28,9 @@ function FilmPage(films : FilmPageProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <PlayButton/>
+                <AddToMyListButton/>
+                <AddReviewButton/>
               </div>
             </div>
           </div>
@@ -95,11 +83,8 @@ function FilmPage(films : FilmPageProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key = {film.id} title = {film.title} src = {film.src}/>)}
-          </div>
+          <FilmsList films={films}/>
         </section>
-
         <Footer/>
       </div>
     </>
