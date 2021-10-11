@@ -13,6 +13,7 @@ function FilmsList({films}: FilmProps): JSX.Element {
           key={film.id}
           title={film.title}
           src={film.src}
+          id={film.id}
         />))}
     </div>
   );

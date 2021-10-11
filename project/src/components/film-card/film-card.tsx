@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import {Film} from '../../types/film/film';
 
 function FilmCard({title, src, id}: Film): JSX.Element {
@@ -8,7 +8,7 @@ function FilmCard({title, src, id}: Film): JSX.Element {
         <img src={src} alt={title} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <Link to={`/films/${id}`} className="small-film-card__link" href="film-page.html">{title}</Link>
+        <Link to={generatePath('/films/:id', {id: id})} className="small-film-card__link" href="film-page.html">{title}</Link>
       </h3>
     </article>
   );

@@ -36,11 +36,8 @@ function App({promo, films}: AppProps): JSX.Element {
           exact
           path={AppRoute.MyList}
           render={() => <MyList films={films} />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          authorizationStatus={AuthorizationStatus.Auth}
         />
-        <Route>
-          <NotFoundScreen />
-        </Route>
         <Route exact path={AppRoute.Film}>
           <FilmPage films={films}/>
         </Route>
@@ -49,6 +46,9 @@ function App({promo, films}: AppProps): JSX.Element {
         </Route>
         <Route exact path={AppRoute.Player}>
           <Player />
+        </Route>
+        <Route>
+          <NotFoundScreen />
         </Route>
       </Switch>
     </BrowserRouter>

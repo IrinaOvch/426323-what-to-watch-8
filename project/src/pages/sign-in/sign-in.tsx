@@ -5,10 +5,9 @@ import Header from '../../components/header/header';
 function SignIn(): JSX.Element {
   return (
     <div className="user-page">
-      <Header
-        heading={'Sign in'}
-        isUserPage
-      />
+      <Header className="user-page__head">
+        <h1 className="page-title user-page__title">Sign in</h1>
+      </Header>
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form">

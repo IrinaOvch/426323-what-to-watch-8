@@ -11,11 +11,9 @@ type MyListProps = {
 function MyList({films}: MyListProps): JSX.Element {
   return (
     <div className="user-page">
-      <Header
-        heading={'My list'}
-        isUserPage
-        isUserBlock
-      />
+      <Header className="user-page__head" isUserBlock>
+        <h1 className="page-title user-page__title">My list</h1>
+      </Header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
