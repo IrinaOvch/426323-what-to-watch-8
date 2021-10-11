@@ -1,20 +1,19 @@
 import Logo from '../logo/logo';
+import UserBlock from '../user-block/user-block';
+import classnames from 'classnames/bind';
 
-function Header() : JSX.Element {
+type HeaderProps = {
+  children?: React.ReactNode;
+  className?: string;
+  isUserBlock?: boolean;
+}
+
+function Header({className, isUserBlock, children}: HeaderProps) : JSX.Element {
   return (
-    <header className="page-header film-card__head">
+    <header className={classnames('page-header', className) }>
       <Logo light={false}/>
-
-      <ul className="user-block">
-        <li className="user-block__item">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
-        </li>
-        <li className="user-block__item">
-          <a className="user-block__link" href="/">Sign out</a>
-        </li>
-      </ul>
+      {children}
+      {isUserBlock && <UserBlock />}
     </header>
   );
 

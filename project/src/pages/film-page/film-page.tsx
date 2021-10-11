@@ -6,7 +6,11 @@ import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-
 import AddReviewButton from '../../components/add-review-button/add-review-button';
 import { Film } from '../../types/film/film';
 
-function FilmPage(films: Film[]): JSX.Element {
+type FilmProps = {
+  films: Film[]
+}
+
+function FilmPage({films}: FilmProps): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full">
@@ -17,7 +21,7 @@ function FilmPage(films: Film[]): JSX.Element {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header/>
+          <Header isUserBlock className="film-card__head" />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
