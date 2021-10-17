@@ -1,16 +1,19 @@
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Header from '../../components/header/header';
 import { FILMS } from '../../mocks/films';
 
-type Id = {
+type PageParams = {
   id: string
 }
 
 function AddReview(): JSX.Element {
-  const id: Id = useParams();
-  const currentId = Number(id.id);
-  const activeFilm = FILMS[currentId - 1];
+  const { id } = useParams<PageParams>();
+  const activeFilm = FILMS.find((film) => film.id === Number(id));
+
+  if (activeFilm === undefined) {
+    return (<Redirect to={{ pathname: ''}}/>);
+  }
 
   return (
     <section className="film-card film-card--full">
@@ -28,7 +31,7 @@ function AddReview(): JSX.Element {
         </div>
       </div>
 
-      <AddReviewForm onSubmit={() => { throw new Error('Function \'onSubmit\' isn\'t implemented yet.');}}/>
+      <AddReviewForm />
 
     </section>
   );

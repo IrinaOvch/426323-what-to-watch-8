@@ -12,18 +12,18 @@ import Player from '../../pages/player/player';
 
 
 type AppProps = {
-  promoId: number;
+  promo: Film;
   films: Film[];
 }
 
-function App({promoId, films}: AppProps): JSX.Element {
+function App({promo, films}: AppProps): JSX.Element {
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
           <MainPage
-            promoId={promoId}
+            promo={promo}
             films={films}
           />
         </Route>

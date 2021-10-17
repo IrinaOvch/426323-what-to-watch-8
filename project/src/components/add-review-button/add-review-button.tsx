@@ -5,7 +5,7 @@ type AddReviewButtonProps = {
 }
 
 function AddReviewButton({id}: AddReviewButtonProps): JSX.Element {
-  return <Link to={generatePath('/films/:id/review', {id: id})} href="add-review.html" className="btn film-card__button">Add review</Link>;
+  return <Link to={generatePath('/films/:id/review', {id})} className="btn film-card__button">Add review</Link>;
 }
 
 export default AddReviewButton;

@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/films-list/films-list';
@@ -9,18 +8,17 @@ import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-
 import { Film } from '../../types/film/film';
 
 type MainPageProps = {
-  promoId: number;
+  promo: Film
   films: Film[];
 }
 
-function MainPage({promoId, films}: MainPageProps) : JSX.Element {
-  const promoFilm = films[promoId];
+function MainPage({promo, films}: MainPageProps) : JSX.Element {
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promoFilm.backgroundImage} alt={promoFilm.title} />
+          <img src={promo.backgroundImage} alt={promo.title} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -30,18 +28,18 @@ function MainPage({promoId, films}: MainPageProps) : JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promoFilm.posterImage} alt={`${promoFilm.title} poster`} width="218" height="327" />
+              <img src={promo.posterImage} alt={`${promo.title} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.title}</h2>
+              <h2 className="film-card__title">{promo.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.releaseYear}</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.releaseYear}</span>
               </p>
 
               <div className="film-card__buttons">
-                <PlayButton id={promoFilm.id}/>
+                <PlayButton id={promo.id}/>
                 <AddToMyListButton/>
               </div>
             </div>

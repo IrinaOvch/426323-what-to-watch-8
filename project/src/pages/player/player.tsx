@@ -1,15 +1,18 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { FILMS } from '../../mocks/films';
 
-type Id = {
+type PageParams = {
   id: string
 }
 
 function Player(): JSX.Element {
-  const id: Id = useParams();
-  const currentId = Number(id.id);
-  const activeFilm = FILMS[currentId - 1];
+  const { id } = useParams<PageParams>();
+  const activeFilm = FILMS.find((film) => film.id === Number(id));
+
+  if (activeFilm === undefined) {
+    return (<Redirect to={{ pathname: ''}}/>);
+  }
 
   return (
     <div className="player">

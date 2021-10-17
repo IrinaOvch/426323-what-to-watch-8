@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FilmsList from '../../components/films-list/films-list';
@@ -13,14 +13,17 @@ type FilmProps = {
   films: FilmPreview[]
 }
 
-type Id = {
+type PageParams = {
   id: string
 }
 
 function FilmPage({films}: FilmProps): JSX.Element {
-  const id: Id = useParams();
-  const currentId = Number(id.id);
-  const activeFilm = FILMS[currentId - 1];
+  const { id } = useParams<PageParams>();
+  const activeFilm = FILMS.find((film) => film.id === Number(id));
+
+  if (activeFilm === undefined) {
+    return (<Redirect to={{ pathname: ''}}/>);
+  }
 
   return (
     <>
