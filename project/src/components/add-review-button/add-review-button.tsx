@@ -1,5 +1,11 @@
-function AddReviewButton(): JSX.Element {
-  return <a href="add-review.html" className="btn film-card__button">Add review</a>;
+import { generatePath, Link } from 'react-router-dom';
+
+type AddReviewButtonProps = {
+  id: number;
+}
+
+function AddReviewButton({id}: AddReviewButtonProps): JSX.Element {
+  return <Link to={generatePath('/films/:id/review', {id})} className="btn film-card__button">Add review</Link>;
 }
 
 export default AddReviewButton;

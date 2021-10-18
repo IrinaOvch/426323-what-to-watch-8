@@ -1,5 +1,5 @@
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main/main';
 import SignIn from '../../pages/sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
@@ -10,16 +10,14 @@ import FilmPage from '../../pages/film-page/film-page';
 import AddReview from '../../pages/add-review/add-review';
 import Player from '../../pages/player/player';
 
+
 type AppProps = {
-  promo: {
-    title: string;
-    genre: string;
-    releaseYear: number;
-  },
-  films: Film[]
+  promo: Film;
+  films: Film[];
 }
 
 function App({promo, films}: AppProps): JSX.Element {
+
   return (
     <BrowserRouter>
       <Switch>
@@ -45,7 +43,7 @@ function App({promo, films}: AppProps): JSX.Element {
           <AddReview />
         </Route>
         <Route exact path={AppRoute.Player}>
-          <Player />
+          <Player/>
         </Route>
         <Route>
           <NotFoundScreen />

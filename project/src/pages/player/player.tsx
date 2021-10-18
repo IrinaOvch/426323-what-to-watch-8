@@ -1,4 +1,19 @@
+import { useParams, Redirect } from 'react-router-dom';
+import dayjs from 'dayjs';
+import { FILMS } from '../../mocks/films';
+
+type PageParams = {
+  id: string
+}
+
 function Player(): JSX.Element {
+  const { id } = useParams<PageParams>();
+  const activeFilm = FILMS.find((film) => film.id === Number(id));
+
+  if (activeFilm === undefined) {
+    return (<Redirect to={{ pathname: ''}}/>);
+  }
+
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"/ >
@@ -11,7 +26,7 @@ function Player(): JSX.Element {
             <progress className="player__progress" value="30" max="100" />
             <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{dayjs(activeFilm.runTime).format('HH:mm:ss')}</div>
         </div>
 
         <div className="player__controls-row">
@@ -21,7 +36,7 @@ function Player(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{activeFilm.title}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
