@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import RateStar from '../rate-star/rate-star';
 
 const STARS_AMOUNT = 10;
@@ -9,17 +9,11 @@ function AddReviewForm(): JSX.Element {
     review: '',
   });
 
-  const onRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+  const onReviewChange = (evt: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
+    const name = evt.target.name === 'review-text' ? 'review' : evt.target.name;
     setReview({
       ...newReview,
-      rating: Number(evt.target.value),
-    });
-  };
-
-  const onReviewChange = (evt:React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReview({
-      ...newReview,
-      review: evt.target.value,
+      [name]: name === 'rating' ? Number(evt.target.value) : evt.target.value,
     });
   };
 
@@ -28,18 +22,20 @@ function AddReviewForm(): JSX.Element {
       <form action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
-            {Array(STARS_AMOUNT).fill(0).map((_, i) => i+1).map((x) =>(
+            {Array.from({length: STARS_AMOUNT}, (_, i) => i).map((x) => (
               <RateStar
                 key={x}
                 i={x}
-                onRatingChange={onRatingChange}
+                onRatingChange={onReviewChange}
               />))}
           </div>
         </div>
 
         <div className="add-review__text">
           <textarea
-            className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
+            className="add-review__textarea"
+            name="review-text" id="review-text"
+            placeholder="Review text"
             value={newReview.review}
             onChange={onReviewChange}
           />

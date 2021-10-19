@@ -1,6 +1,8 @@
+import { ChangeEvent } from 'react';
+
 type RateStarProps = {
   i: number;
-  onRatingChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onRatingChange: (evt: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function RateStar({i, onRatingChange}: RateStarProps): JSX.Element {
