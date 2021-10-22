@@ -5,12 +5,12 @@ import FilmsList from '../../components/films-list/films-list';
 import PlayButton from '../../components/play-button/play-button';
 import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
 import AddReviewButton from '../../components/add-review-button/add-review-button';
-import { FilmPreview } from '../../types/film/film';
+import { Film} from '../../types/film/film';
 import { FILMS } from '../../mocks/films';
 import { getScore } from '../../utils/getScore';
 
 type FilmProps = {
-  films: FilmPreview[]
+  films: Film[]
 }
 
 type PageParams = {

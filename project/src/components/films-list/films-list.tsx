@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import FilmCard from '../film-card/film-card';
-import { FilmPreview } from '../../types/film/film';
+import { Film } from '../../types/film/film';
 
 type FilmsListProps = {
-  films: FilmPreview[];
+  films: Film[];
 }
 
 function FilmsList({films}: FilmsListProps): JSX.Element {
@@ -11,14 +11,14 @@ function FilmsList({films}: FilmsListProps): JSX.Element {
 
   return (
     <div className="catalog__films-list">
-      {activeFilm} {/* чтобы линтер не ругался🙃*/}
       {films.map((film) => (
         <FilmCard
           key={film.id}
-          id={film.id}
-          title={film.title}
-          previewImage={film.previewImage}
-          onMouseEnter={() => (setActiveFilm(film.id))}
+          film={film}
+          onMouseEnter={() => (
+            setActiveFilm(film.id)
+          )}
+          isActive={activeFilm === film.id}
         />))}
     </div>
   );
