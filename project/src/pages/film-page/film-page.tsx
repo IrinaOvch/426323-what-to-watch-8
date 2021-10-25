@@ -7,7 +7,7 @@ import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-
 import AddReviewButton from '../../components/add-review-button/add-review-button';
 import { Film} from '../../types/film/film';
 import { FILMS } from '../../mocks/films';
-import { getScore } from '../../utils/getScore';
+import Tabs from '../../components/film-card-tabs/film-card-tabs';
 
 type FilmProps = {
   films: Film[]
@@ -61,35 +61,7 @@ function FilmPage({films}: FilmProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{activeFilm.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{getScore(activeFilm.rating)}</span>
-                  <span className="film-rating__count">{activeFilm.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{activeFilm.description}</p>
-
-                <p className="film-card__director"><strong>Director: {activeFilm.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {activeFilm.starring.join(', ')} and other</strong></p>
-              </div>
+              <Tabs film={activeFilm}/>
             </div>
           </div>
         </div>
