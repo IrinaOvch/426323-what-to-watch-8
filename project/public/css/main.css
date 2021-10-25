@@ -1284,6 +1284,7 @@ main {
   width: 200px; }
 
 .small-film-card {
+  color: inherit;
   border-radius: 6px;
   overflow: hidden;
   position: relative;
