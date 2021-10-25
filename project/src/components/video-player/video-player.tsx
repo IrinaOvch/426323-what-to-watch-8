@@ -1,56 +1,24 @@
-import { useState, useEffect, useRef } from 'react';
+import { forwardRef, ForwardedRef } from 'react';
 
 type VideoPlayerProps = {
   previewVideoLink: string;
   posterImage: string;
-  isActive: boolean;
-  onMouseEnter: () => void;
 }
 
-function VideoPlayer({previewVideoLink, posterImage, isActive, onMouseEnter}: VideoPlayerProps) : JSX.Element {
-  const [isPlaying, setIsPlaying] = useState(isActive);
-
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const handleMouseEnter = () => {
-    onMouseEnter();
-    setIsPlaying(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPlaying(false);
-  };
-
-  const stopPlay = (video: HTMLVideoElement | null): void => {
-    if (video) {
-      video.pause();
-      video.load();
-    }
-  };
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-    if (isPlaying && isActive) {
-      timeout = setTimeout(() => videoRef.current?.play(), 1000);
-    } else {
-      stopPlay(videoRef.current);
-    }
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-  }, [isPlaying, isActive]);
+function Player(
+  {previewVideoLink, posterImage}: VideoPlayerProps,
+  ref: ForwardedRef<HTMLVideoElement>,
+): JSX.Element {
 
   return (
     <div
       className="small-film-card__image"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <video
         poster={posterImage}
+        className="small-film-card__image"
         src={previewVideoLink}
-        ref={videoRef}
+        ref={ref}
         preload="none"
         loop
         muted
@@ -58,5 +26,7 @@ function VideoPlayer({previewVideoLink, posterImage, isActive, onMouseEnter}: Vi
     </div>
   );
 }
+
+const VideoPlayer = forwardRef(Player);
 
 export default VideoPlayer;

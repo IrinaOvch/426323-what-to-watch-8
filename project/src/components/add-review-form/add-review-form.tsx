@@ -5,15 +5,15 @@ const STARS_AMOUNT = 10;
 
 function AddReviewForm(): JSX.Element {
   const [newReview, setReview] = useState({
-    rating: 0,
+    rating: '0',
     review: '',
   });
 
-  const onReviewChange = (evt: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
-    const name = evt.target.name === 'review-text' ? 'review' : evt.target.name;
+  const handleReviewChange = ({ target }: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = target;
     setReview({
       ...newReview,
-      [name]: name === 'rating' ? Number(evt.target.value) : evt.target.value,
+      [name]: value,
     });
   };
 
@@ -26,7 +26,7 @@ function AddReviewForm(): JSX.Element {
               <RateStar
                 key={x}
                 i={x}
-                onRatingChange={onReviewChange}
+                onRatingChange={handleReviewChange}
               />))}
           </div>
         </div>
@@ -37,7 +37,7 @@ function AddReviewForm(): JSX.Element {
             name="review-text" id="review-text"
             placeholder="Review text"
             value={newReview.review}
-            onChange={onReviewChange}
+            onChange={handleReviewChange}
           />
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
