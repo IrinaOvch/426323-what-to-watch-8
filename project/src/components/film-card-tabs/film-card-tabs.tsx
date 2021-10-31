@@ -1,9 +1,9 @@
 import { MouseEvent, useEffect, useState } from 'react';
 import { Film } from '../../types/film/film';
 import FilmCardNavigation from '../film-card-navigation/film-card-navigation';
-import TabDetails from '../film-card-tab-details/film-card-tab-details';
-import TabOverview from '../film-card-tab-overview/film-card-tab-overview';
-import TabReviews from '../film-card-tab-reviews/film-card-tab-reviews';
+import TabDetails from '../film-details/film-details';
+import TabOverview from '../film-overview/film-overview';
+import TabReviews from '../film-reviews/film-reviews';
 
 const FilmCardTabs = {
   OVERVIEW: 'Overview',
@@ -17,15 +17,14 @@ type TabsProps = {
 
 function Tabs({film} : TabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(FilmCardTabs.OVERVIEW);
-  const handleTabClick = (evt: MouseEvent<HTMLLIElement>) => {
+  const handleTabClick = (evt: MouseEvent<HTMLAnchorElement>, tab: string) => {
     evt.preventDefault();
-    const newValue = evt.currentTarget.innerText;
-    setActiveTab(newValue);
+    setActiveTab(tab);
   };
 
   useEffect(() => setActiveTab(FilmCardTabs.OVERVIEW), [film.id]);
 
-  const getTabByType = (type: string) => {
+  const renderActiveTab = (type: string) => {
     switch (type) {
       case FilmCardTabs.OVERVIEW:
         return <TabOverview film={film}/>;
@@ -42,9 +41,7 @@ function Tabs({film} : TabsProps): JSX.Element {
         activeTab={activeTab}
         onTabClick={handleTabClick}
       />
-      {
-        getTabByType(activeTab)
-      }
+      {renderActiveTab(activeTab)}
     </>
   );
 }
