@@ -1,3 +1,4 @@
+import { connect, ConnectedProps } from 'react-redux';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/films-list/films-list';
@@ -5,14 +6,28 @@ import GenresList from '../../components/genres-list/genres-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import PlayButton from '../../components/play-button/play-button';
 import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
+import { getGenres } from '../../utils/getGenres';
+import { State } from '../../types/State';
+import { getFilmsByGenre } from '../../utils/getFilmsByGenre';
 
 type MainPageProps = {
   promo: Film
   films: Film[];
 }
 
-function MainPage({promo, films}: MainPageProps) : JSX.Element {
+const mapStateToProps = ({currentGenre}: State) => ({
+  currentGenre,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & MainPageProps;
+
+function MainPage({promo, films, currentGenre}: ConnectedComponentProps) : JSX.Element {
+  const genres = getGenres(films);
+  const filteredFilms = getFilmsByGenre(currentGenre);
 
   return (
     <>
@@ -51,9 +66,9 @@ function MainPage({promo, films}: MainPageProps) : JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList/>
+          <GenresList genres={genres}/>
 
-          <FilmsList films={films}/>
+          <FilmsList films={filteredFilms}/>
 
           <ShowMoreButton/>
         </section>
@@ -64,4 +79,5 @@ function MainPage({promo, films}: MainPageProps) : JSX.Element {
   );
 }
 
-export default MainPage;
+export { MainPage };
+export default connector(MainPage);

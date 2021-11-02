@@ -5,7 +5,7 @@ import FilmsList from '../../components/films-list/films-list';
 import PlayButton from '../../components/play-button/play-button';
 import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
 import AddReviewButton from '../../components/add-review-button/add-review-button';
-import { Film} from '../../types/film/film';
+import { Film} from '../../types/film';
 import { FILMS } from '../../mocks/films';
 import Tabs from '../../components/film-card-tabs/film-card-tabs';
 

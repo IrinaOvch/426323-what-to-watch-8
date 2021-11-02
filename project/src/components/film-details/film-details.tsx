@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 
 type TabDetailsProps = {
   film: Film

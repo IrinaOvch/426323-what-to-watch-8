@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useState } from 'react';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 import FilmCardNavigation from '../film-card-navigation/film-card-navigation';
 import TabDetails from '../film-details/film-details';
 import TabOverview from '../film-overview/film-overview';

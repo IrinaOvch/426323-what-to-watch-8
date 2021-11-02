@@ -1,4 +1,4 @@
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 import { getScore } from '../../utils/getScore';
 
 type TabOverviewProps = {
