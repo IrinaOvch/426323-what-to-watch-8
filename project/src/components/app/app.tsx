@@ -3,7 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import MainPage from '../../pages/main/main';
 import SignIn from '../../pages/sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 import MyList from '../../pages/my-list/my-list';
 import NotFoundScreen from '../../pages/page-not-found/page-not-found';
 import FilmPage from '../../pages/film-page/film-page';

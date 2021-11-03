@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 
 type TabDetailsProps = {
   film: Film
@@ -7,6 +7,7 @@ type TabDetailsProps = {
 
 function TabDetails({film}: TabDetailsProps): JSX.Element {
   const {director, starring, runTime, genre, releaseYear} = film;
+
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

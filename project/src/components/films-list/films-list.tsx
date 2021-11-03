@@ -1,5 +1,5 @@
 import FilmCard from '../film-card/film-card';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 
 type FilmsListProps = {
   films: Film[];

@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { generatePath, Link } from 'react-router-dom';
-import { Film } from '../../types/film/film';
+import { Film } from '../../types/film';
 import VideoPlayer from '../video-player/video-player';
 
 type FilmCardProps = {
