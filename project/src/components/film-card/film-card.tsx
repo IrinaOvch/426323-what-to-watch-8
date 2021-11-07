@@ -53,9 +53,7 @@ function FilmCard({film}: FilmCardProps): JSX.Element {
         posterImage={previewImage}
         ref={videoRef}
       />
-      <h3 className="small-film-card__title">
-        <Link to={generatePath('/films/:id', {id: id})} className="small-film-card__link">{title}</Link>
-      </h3>
+      <h3 className="small-film-card__title small-film-card__link">{title}</h3>
     </Link>
   );
 }

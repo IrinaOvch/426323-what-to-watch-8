@@ -1,6 +1,7 @@
+import React from 'react';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
-import classnames from 'classnames/bind';
+import cn from 'classnames/bind';
 
 type HeaderProps = {
   children?: React.ReactNode;
@@ -10,7 +11,7 @@ type HeaderProps = {
 
 function Header({className, isUserBlock, children}: HeaderProps) : JSX.Element {
   return (
-    <header className={classnames('page-header', className) }>
+    <header className={cn('page-header', className) }>
       <Logo light={false}/>
       {children}
       {isUserBlock && <UserBlock />}

@@ -8,8 +8,8 @@ import PlayButton from '../../components/play-button/play-button';
 import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
 import { Film } from '../../types/film';
 import { getGenres } from '../../utils/getGenres';
-import { State } from '../../types/State';
 import { getFilmsByGenre } from '../../utils/getFilmsByGenre';
+import { State } from '../../types/state';
 
 type MainPageProps = {
   promo: Film
@@ -27,7 +27,7 @@ type ConnectedComponentProps = PropsFromRedux & MainPageProps;
 
 function MainPage({promo, films, currentGenre}: ConnectedComponentProps) : JSX.Element {
   const genres = getGenres(films);
-  const filteredFilms = getFilmsByGenre(currentGenre);
+  const filteredFilms = getFilmsByGenre(currentGenre, films);
 
   return (
     <>
