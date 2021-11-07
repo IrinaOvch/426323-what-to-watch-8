@@ -1,4 +1,4 @@
-import { ActionType, ChangeGenre } from '../types/action';
+import { ActionType, ChangeGenre, IncrementFilmsShownAmount, ResetFilmsShownAmount } from '../types/action';
 
 
 const changeGenre = (genre: string): ChangeGenre => ({
@@ -6,4 +6,13 @@ const changeGenre = (genre: string): ChangeGenre => ({
   payload: genre,
 });
 
-export { changeGenre };
+const incrementFilmsShownAmount = (amount: number): IncrementFilmsShownAmount => ({
+  type: ActionType.IncrementFilmsShownAmount,
+  payload: amount,
+});
+
+const resetFilmsShownAmount = (): ResetFilmsShownAmount => ({
+  type: ActionType.ResetFilmsShownAmount,
+});
+
+export { changeGenre, incrementFilmsShownAmount, resetFilmsShownAmount };

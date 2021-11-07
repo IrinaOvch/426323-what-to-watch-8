@@ -9,6 +9,8 @@ import { Film} from '../../types/film';
 import { FILMS } from '../../mocks/films';
 import Tabs from '../../components/film-card-tabs/film-card-tabs';
 
+const MAX_AMOUNT = 4;
+
 type FilmProps = {
   films: Film[]
 }
@@ -71,7 +73,7 @@ function FilmPage({films}: FilmProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={films}/>
+          <FilmsList films={films.slice(0, MAX_AMOUNT)}/>
         </section>
         <Footer/>
       </div>
