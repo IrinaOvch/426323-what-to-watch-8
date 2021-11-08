@@ -16,8 +16,8 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        promo = {FILMS[0]}
-        films = {FILMS}
+        promo={FILMS[0]}
+        films={FILMS}
       />
     </Provider>
   </React.StrictMode>,

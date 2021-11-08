@@ -1,8 +1,7 @@
-import { Film } from './film';
-
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
-  FilterFilms = 'films/filter',
+  IncrementFilmsShownAmount = 'films/incrementFilmsShownAmount',
+  ResetFilmsShownAmount = 'films/resetFilmsShownAmount',
 }
 
 export type ChangeGenre = {
@@ -10,9 +9,13 @@ export type ChangeGenre = {
   payload: string;
 };
 
-export type FilterFilms = {
-  type: ActionType.FilterFilms;
-  payload: Film[];
+export type IncrementFilmsShownAmount = {
+  type: ActionType.IncrementFilmsShownAmount;
+  payload: number;
 };
 
-export type Actions = ChangeGenre | FilterFilms;
+export type ResetFilmsShownAmount = {
+  type: ActionType.ResetFilmsShownAmount;
+}
+
+export type Actions = ChangeGenre | IncrementFilmsShownAmount | ResetFilmsShownAmount;

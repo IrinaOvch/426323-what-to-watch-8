@@ -1,10 +1,10 @@
+import { MouseEvent } from 'react';
 import { Dispatch } from 'redux';
 import { connect, ConnectedProps } from 'react-redux';
-import { MouseEvent } from 'react';
-import classnames from 'classnames/bind';
-import { State } from '../../types/State';
+import cn from 'classnames/bind';
 import { Actions } from '../../types/action';
 import { changeGenre } from '../../store/action';
+import { State } from '../../types/state';
 
 type GenresListProps = {
   genres: string[];
@@ -36,7 +36,7 @@ function GenresList(props: ConnectedComponentProps): JSX.Element {
   return (
     <ul className="catalog__genres-list">
       {genres.map((genre) => {
-        const cls = classnames('catalog__genres-item', genre === currentGenre ? 'catalog__genres-item--active' : '' );
+        const cls = cn('catalog__genres-item', {'catalog__genres-item--active': genre === currentGenre});
         return (
           <li className={cls} key={genre}>
             <a

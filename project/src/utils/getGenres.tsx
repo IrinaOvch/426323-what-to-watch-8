@@ -5,11 +5,8 @@ const ALL_GENRES = 'All genres';
 
 const getGenres = (films: Film[]): string[] => {
   const genres = [...new Set([ALL_GENRES, ...films.map((film) => film.genre)])];
-  if (genres.length > GENRES_MAX_AMOUNT) {
-    return genres.slice(GENRES_MAX_AMOUNT - 1);
-  }
 
-  return genres;
+  return genres.slice(0, GENRES_MAX_AMOUNT - 1);
 };
 
 export { getGenres };

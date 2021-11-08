@@ -1,3 +1,6 @@
+export const FILMS_SHOWN_PER_CLICK = 2;
+// потом заменю на 8, чтобы моки не плодить сейчас)
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',

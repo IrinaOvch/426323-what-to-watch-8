@@ -1,5 +1,4 @@
-import { ActionType, ChangeGenre, FilterFilms } from '../types/action';
-import { Film } from '../types/film';
+import { ActionType, ChangeGenre, IncrementFilmsShownAmount, ResetFilmsShownAmount } from '../types/action';
 
 
 const changeGenre = (genre: string): ChangeGenre => ({
@@ -7,9 +6,13 @@ const changeGenre = (genre: string): ChangeGenre => ({
   payload: genre,
 });
 
-const filterFilms = (films: Film[]): FilterFilms => ({
-  type: ActionType.FilterFilms,
-  payload: films,
+const incrementFilmsShownAmount = (amount: number): IncrementFilmsShownAmount => ({
+  type: ActionType.IncrementFilmsShownAmount,
+  payload: amount,
 });
 
-export { changeGenre, filterFilms };
+const resetFilmsShownAmount = (): ResetFilmsShownAmount => ({
+  type: ActionType.ResetFilmsShownAmount,
+});
+
+export { changeGenre, incrementFilmsShownAmount, resetFilmsShownAmount };

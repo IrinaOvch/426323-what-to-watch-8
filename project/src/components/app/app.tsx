@@ -24,7 +24,6 @@ function App({promo, films}: AppProps): JSX.Element {
         <Route exact path={AppRoute.Main}>
           <MainPage
             promo={promo}
-            films={films}
           />
         </Route>
         <Route exact path={AppRoute.SignIn}>

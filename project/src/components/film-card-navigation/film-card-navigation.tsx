@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import classnames from 'classnames/bind';
+import cn from 'classnames/bind';
 
 const FILM_CARD_TABS = ['Overview', 'Details', 'Reviews'];
 
@@ -13,7 +13,7 @@ function FilmCardNavigation({activeTab, onTabClick}: FilmCardNavigationProps): J
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
         {FILM_CARD_TABS.map((tab) => {
-          const cls = classnames('film-nav__item', tab === activeTab ? 'film-nav__item--active' : '' );
+          const cls = cn('film-nav__item', {'film-nav__item--active': tab === activeTab});
 
           return (
             <li
