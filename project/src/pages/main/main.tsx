@@ -7,7 +7,6 @@ import GenresList from '../../components/genres-list/genres-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import PlayButton from '../../components/play-button/play-button';
 import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
-import { Film } from '../../types/film';
 import { getGenres } from '../../utils/getGenres';
 import { getFilmsByGenre } from '../../utils/getFilmsByGenre';
 import { State } from '../../types/state';
@@ -16,14 +15,11 @@ import { Actions } from '../../types/action';
 import { FILMS_SHOWN_PER_CLICK } from '../../const';
 import { useEffect } from 'react';
 
-type MainPageProps = {
-  promo: Film
-}
-
-const mapStateToProps = ({currentGenre, filmsShownAmount, films}: State) => ({
+const mapStateToProps = ({currentGenre, filmsShownAmount, films, promo}: State) => ({
   currentGenre,
   filmsShownAmount,
   films,
+  promo,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -38,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & MainPageProps;
+type ConnectedComponentProps = PropsFromRedux;
 
 function MainPage({promo, films, currentGenre, filmsShownAmount, onFilmsShownAmountChange, onResetShownAmountChange}: ConnectedComponentProps) : JSX.Element {
   const genres = getGenres(films);

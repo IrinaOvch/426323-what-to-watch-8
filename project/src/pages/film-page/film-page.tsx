@@ -6,7 +6,6 @@ import PlayButton from '../../components/play-button/play-button';
 import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
 import AddReviewButton from '../../components/add-review-button/add-review-button';
 import { Film} from '../../types/film';
-import { FILMS } from '../../mocks/films';
 import Tabs from '../../components/film-card-tabs/film-card-tabs';
 
 const MAX_AMOUNT = 4;
@@ -21,7 +20,7 @@ type PageParams = {
 
 function FilmPage({films}: FilmProps): JSX.Element {
   const { id } = useParams<PageParams>();
-  const activeFilm = FILMS.find((film) => film.id === Number(id));
+  const activeFilm = films.find((film) => film.id === Number(id));
 
   if (activeFilm === undefined) {
     return (<Redirect to={{ pathname: ''}}/>);
