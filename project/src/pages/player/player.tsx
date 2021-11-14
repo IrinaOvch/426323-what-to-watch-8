@@ -1,14 +1,23 @@
+import {connect, ConnectedProps} from 'react-redux';
 import { useParams, Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { FILMS } from '../../mocks/films';
+import { State } from '../../types/state';
 
 type PageParams = {
   id: string
 }
 
-function Player(): JSX.Element {
+const mapStateToProps = ({films}: State) => ({
+  films,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+function Player({films}: PropsFromRedux): JSX.Element {
   const { id } = useParams<PageParams>();
-  const activeFilm = FILMS.find((film) => film.id === Number(id));
+  const activeFilm = films.find((film) => film.id === Number(id));
 
   if (activeFilm === undefined) {
     return (<Redirect to={{ pathname: ''}}/>);
@@ -50,4 +59,5 @@ function Player(): JSX.Element {
   );
 }
 
-export default Player;
+export { Player };
+export default connector(Player);

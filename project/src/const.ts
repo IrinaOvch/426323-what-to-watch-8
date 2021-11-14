@@ -1,5 +1,4 @@
-export const FILMS_SHOWN_PER_CLICK = 2;
-// потом заменю на 8, чтобы моки не плодить сейчас)
+export const FILMS_SHOWN_PER_CLICK = 8;
 
 export enum AppRoute {
   Main = '/',
@@ -14,4 +13,11 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum APIRoute {
+  Films = '/films',
+  Promo = '/promo',
+  Login = '/login',
+  Logout = '/logout',
 }
