@@ -3,22 +3,44 @@ import {
   ActionType,
   ChangeGenre,
   IncrementFilmsShownAmount,
-  LoadFilms,
+  LoadFilmsRequest,
+  LoadFilmsSuccess,
+  LoadFilmsFailed,
   ResetFilmsShownAmount,
   RequireLogout,
   RequireAuthorization,
-  LoadPromo
+  LoadPromoRequest,
+  LoadPromoSuccess,
+  LoadPromoFailed
 } from '../types/action';
 import { FilmFromServerType } from '../types/film';
 
-const loadFilms = (films: FilmFromServerType[]): LoadFilms => ({
-  type: ActionType.LoadFilms,
+const loadFilmsRequest = (status: boolean): LoadFilmsRequest => ({
+  type: ActionType.LoadFilmsRequest,
+  payload: status,
+});
+
+const loadFilmsSuccess = (films: FilmFromServerType[]): LoadFilmsSuccess => ({
+  type: ActionType.LoadFilmsSuccess,
   payload: films,
 });
 
-const loadPromo = (promoFilm: FilmFromServerType): LoadPromo => ({
-  type: ActionType.LoadPromo,
+const loadFilmsFailed = (): LoadFilmsFailed => ({
+  type: ActionType.LoadFilmsFailed,
+});
+
+const loadPromoRequest = (status: boolean): LoadPromoRequest => ({
+  type: ActionType.LoadPromoRequest,
+  payload: status,
+});
+
+const loadPromoSuccess = (promoFilm: FilmFromServerType): LoadPromoSuccess => ({
+  type: ActionType.LoadPromoSuccess,
   payload: promoFilm,
+});
+
+const loadPromoFailed = (): LoadPromoFailed => ({
+  type: ActionType.LoadPromoFailed,
 });
 
 const changeGenre = (genre: string): ChangeGenre => ({
@@ -44,4 +66,14 @@ export const requireLogout = (): RequireLogout => ({
   type: ActionType.RequireLogout,
 } as const);
 
-export { changeGenre, incrementFilmsShownAmount, resetFilmsShownAmount, loadFilms, loadPromo };
+export {
+  changeGenre,
+  incrementFilmsShownAmount,
+  resetFilmsShownAmount,
+  loadFilmsRequest,
+  loadFilmsSuccess,
+  loadFilmsFailed,
+  loadPromoRequest,
+  loadPromoSuccess,
+  loadPromoFailed
+};

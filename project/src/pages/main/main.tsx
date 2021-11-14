@@ -5,8 +5,6 @@ import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/films-list/films-list';
 import GenresList from '../../components/genres-list/genres-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
-import PlayButton from '../../components/play-button/play-button';
-import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
 import { getGenres } from '../../utils/getGenres';
 import { getFilmsByGenre } from '../../utils/getFilmsByGenre';
 import { State } from '../../types/state';
@@ -14,12 +12,27 @@ import { incrementFilmsShownAmount, resetFilmsShownAmount } from '../../store/ac
 import { Actions } from '../../types/action';
 import { FILMS_SHOWN_PER_CLICK } from '../../const';
 import { useEffect } from 'react';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import FilmActions from '../../components/film-actions/film-actions';
+import ErrorScreen from '../../components/error-screen/error-screen';
 
-const mapStateToProps = ({currentGenre, filmsShownAmount, films, promo}: State) => ({
+const mapStateToProps = ({
+  currentGenre,
+  filmsShownAmount,
+  films, promo,
+  isFilmsLoading,
+  isFilmsError,
+  isPromoLoading,
+  isPromoError,
+}: State) => ({
   currentGenre,
   filmsShownAmount,
   films,
   promo,
+  isFilmsLoading,
+  isFilmsError,
+  isPromoLoading,
+  isPromoError,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -36,7 +49,18 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedComponentProps = PropsFromRedux;
 
-function MainPage({promo, films, currentGenre, filmsShownAmount, onFilmsShownAmountChange, onResetShownAmountChange}: ConnectedComponentProps) : JSX.Element {
+function MainPage({
+  promo,
+  films,
+  currentGenre,
+  filmsShownAmount,
+  onFilmsShownAmountChange,
+  onResetShownAmountChange,
+  isFilmsLoading,
+  isFilmsError,
+  isPromoLoading,
+  isPromoError,
+}: ConnectedComponentProps): JSX.Element {
   const genres = getGenres(films);
   const filteredFilms = getFilmsByGenre(currentGenre, films);
   const renderedFilms = filteredFilms.slice(0, filmsShownAmount);
@@ -49,6 +73,14 @@ function MainPage({promo, films, currentGenre, filmsShownAmount, onFilmsShownAmo
   useEffect(() => {
     onResetShownAmountChange();
   }, [onResetShownAmountChange, currentGenre]);
+
+  if (isFilmsLoading || isPromoLoading) {
+    return <LoadingScreen/>;
+  }
+
+  if (isFilmsError || isPromoError) {
+    return <ErrorScreen/>;
+  }
 
   return (
     <>
@@ -73,11 +105,7 @@ function MainPage({promo, films, currentGenre, filmsShownAmount, onFilmsShownAmo
                 <span className="film-card__genre">{promo.genre}</span>
                 <span className="film-card__year">{promo.releaseYear}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <PlayButton id={promo.id}/>
-                <AddToMyListButton/>
-              </div>
+              <FilmActions filmId={promo.id} />
             </div>
           </div>
         </div>
@@ -88,7 +116,7 @@ function MainPage({promo, films, currentGenre, filmsShownAmount, onFilmsShownAmo
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenresList genres={genres}/>
-
+          {isFilmsError && <ErrorScreen/>}
           <FilmsList films={renderedFilms}/>
 
           {isMoreFilmsToShow && <ShowMoreButton onShowMoreClick={handleShowMoreButtonClick}/>}

@@ -2,11 +2,9 @@ import { useParams, Redirect } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FilmsList from '../../components/films-list/films-list';
-import PlayButton from '../../components/play-button/play-button';
-import AddToMyListButton from '../../components/add-to-my-list-button/add-to-my-list-button';
-import AddReviewButton from '../../components/add-review-button/add-review-button';
 import { Film} from '../../types/film';
 import Tabs from '../../components/film-card-tabs/film-card-tabs';
+import FilmActions from '../../components/film-actions/film-actions';
 
 const MAX_AMOUNT = 4;
 
@@ -45,12 +43,7 @@ function FilmPage({films}: FilmProps): JSX.Element {
                 <span className="film-card__genre">{activeFilm.genre}</span>
                 <span className="film-card__year">{activeFilm.releaseYear}</span>
               </p>
-
-              <div className="film-card__buttons">
-                <PlayButton id={activeFilm.id}/>
-                <AddToMyListButton/>
-                <AddReviewButton id={activeFilm.id}/>
-              </div>
+              <FilmActions filmId={activeFilm.id}/>
             </div>
           </div>
         </div>

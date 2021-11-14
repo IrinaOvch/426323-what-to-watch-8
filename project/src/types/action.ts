@@ -8,8 +8,12 @@ export enum ActionType {
   ChangeGenre = 'films/changeGenre',
   IncrementFilmsShownAmount = 'films/incrementFilmsShownAmount',
   ResetFilmsShownAmount = 'films/resetFilmsShownAmount',
-  LoadFilms = 'data/loadFilms',
-  LoadPromo = 'data/loadPromo',
+  LoadFilmsRequest = 'data/loadFilmsRequest',
+  LoadFilmsSuccess = 'data/loadFilmsSuccess',
+  LoadFilmsFailed = 'data/loadFilmsFailed',
+  LoadPromoRequest = 'data/loadPromoRequest',
+  LoadPromoSuccess = 'data/loadPromoSuccess',
+  LoadPromoFailed = 'data/loadPromoFailed',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
 }
@@ -28,14 +32,32 @@ export type ResetFilmsShownAmount = {
   type: ActionType.ResetFilmsShownAmount;
 }
 
-export type LoadFilms = {
-  type: ActionType.LoadFilms;
+export type LoadFilmsRequest = {
+  type: ActionType.LoadFilmsRequest;
+  payload: boolean;
+}
+
+export type LoadFilmsSuccess = {
+  type: ActionType.LoadFilmsSuccess;
   payload: FilmFromServerType[];
 }
 
-export type LoadPromo = {
-  type: ActionType.LoadPromo;
+export type LoadFilmsFailed = {
+  type: ActionType.LoadFilmsFailed;
+}
+
+export type LoadPromoRequest = {
+  type: ActionType.LoadPromoRequest;
+  payload: boolean;
+}
+
+export type LoadPromoSuccess = {
+  type: ActionType.LoadPromoSuccess;
   payload: FilmFromServerType;
+}
+
+export type LoadPromoFailed = {
+  type: ActionType.LoadPromoFailed;
 }
 
 export type RequireAuthorization = {
@@ -51,8 +73,12 @@ export type Actions =
   ChangeGenre |
   IncrementFilmsShownAmount |
   ResetFilmsShownAmount |
-  LoadFilms |
-  LoadPromo |
+  LoadFilmsRequest |
+  LoadFilmsSuccess |
+  LoadFilmsFailed |
+  LoadPromoRequest |
+  LoadPromoSuccess |
+  LoadPromoFailed |
   RequireAuthorization |
   RequireLogout;
 
