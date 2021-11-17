@@ -3,9 +3,8 @@ import styles from './loading-screen.module.css';
 import cn from 'classnames/bind';
 
 function LoadingScreen(): JSX.Element {
-  const cls = cn('page-content', styles.wrapper);
   return (
-    <div className={cls}>
+    <div className={cn('page-content', styles.wrapper)}>
       <p>Loading ...</p>
       <Loader
         type="TailSpin"

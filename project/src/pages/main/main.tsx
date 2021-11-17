@@ -19,7 +19,8 @@ import ErrorScreen from '../../components/error-screen/error-screen';
 const mapStateToProps = ({
   currentGenre,
   filmsShownAmount,
-  films, promo,
+  films,
+  promo,
   isFilmsLoading,
   isFilmsError,
   isPromoLoading,

@@ -1,8 +1,8 @@
 import { forwardRef, ForwardedRef } from 'react';
 
 type VideoPlayerProps = {
-  previewVideoLink: string;
-  posterImage: string;
+  previewVideoLink?: string;
+  posterImage?: string;
 }
 
 function Player(

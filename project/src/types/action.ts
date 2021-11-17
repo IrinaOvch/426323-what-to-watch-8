@@ -3,6 +3,7 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AuthorizationStatus } from '../const';
 import { FilmFromServerType } from './film';
 import { State } from './state';
+import { UserInfo } from './user-info';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
@@ -16,6 +17,8 @@ export enum ActionType {
   LoadPromoFailed = 'data/loadPromoFailed',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  Login = 'user/login',
+  RedirectToRoute = 'films/redirectToRoute',
 }
 
 export type ChangeGenre = {
@@ -69,6 +72,16 @@ export type RequireLogout = {
   type: ActionType.RequireLogout;
 }
 
+export type Login = {
+  type: ActionType.Login;
+  payload: UserInfo;
+}
+
+export type RedirectToRoute = {
+  type: ActionType.RedirectToRoute;
+  payload: string;
+};
+
 export type Actions =
   ChangeGenre |
   IncrementFilmsShownAmount |
@@ -80,7 +93,9 @@ export type Actions =
   LoadPromoSuccess |
   LoadPromoFailed |
   RequireAuthorization |
-  RequireLogout;
+  RequireLogout |
+  Login |
+  RedirectToRoute;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

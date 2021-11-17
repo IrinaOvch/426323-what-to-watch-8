@@ -2,6 +2,7 @@ import { AuthorizationStatus, FILMS_SHOWN_PER_CLICK } from '../const';
 import { Actions, ActionType } from '../types/action';
 import { Film } from '../types/film';
 import { State } from '../types/state';
+import { UserInfo } from '../types/user-info';
 import { adaptFilmsToClient, adaptFilmToClient } from '../utils/adapt-to-client';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   filmsShownAmount: FILMS_SHOWN_PER_CLICK,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoaded: false,
+  authData: {} as UserInfo,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -41,6 +43,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, authorizationStatus: AuthorizationStatus.NoAuth };
     case ActionType.RequireAuthorization:
       return { ...state, authorizationStatus: action.payload, isDataLoaded: true };
+    case ActionType.Login:
+      return { ...state, authData: action.payload };
     default:
       return state;
   }

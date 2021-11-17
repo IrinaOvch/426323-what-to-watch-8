@@ -1,8 +1,8 @@
 import {connect, ConnectedProps} from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MainPage from '../../pages/main/main';
-import SignIn from '../../pages/sign-in/sign-in';
+import AuthScreen from '../../pages/sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
 import MyList from '../../pages/my-list/my-list';
 import NotFoundScreen from '../../pages/page-not-found/page-not-found';
@@ -40,20 +40,21 @@ function App(props: ConnectedComponentProps): JSX.Element {
           <MainPage/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
-          <SignIn/>
+          <AuthScreen/>
         </Route>
         <PrivateRoute
           exact
           path={AppRoute.MyList}
           render={() => <MyList films={films} />}
-          authorizationStatus={AuthorizationStatus.Auth}
         />
         <Route exact path={AppRoute.Film}>
           <FilmPage films={films}/>
         </Route>
-        <Route exact path={AppRoute.AddReview}>
-          <AddReview />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.AddReview}
+          render={() => <AddReview />}
+        />
         <Route exact path={AppRoute.Player}>
           <Player/>
         </Route>

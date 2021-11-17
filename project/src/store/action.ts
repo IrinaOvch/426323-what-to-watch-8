@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import {
   ActionType,
   ChangeGenre,
@@ -11,9 +11,11 @@ import {
   RequireAuthorization,
   LoadPromoRequest,
   LoadPromoSuccess,
-  LoadPromoFailed
+  LoadPromoFailed,
+  Login
 } from '../types/action';
 import { FilmFromServerType } from '../types/film';
+import { UserInfo } from '../types/user-info';
 
 const loadFilmsRequest = (status: boolean): LoadFilmsRequest => ({
   type: ActionType.LoadFilmsRequest,
@@ -57,13 +59,23 @@ const resetFilmsShownAmount = (): ResetFilmsShownAmount => ({
   type: ActionType.ResetFilmsShownAmount,
 });
 
-export const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization => ({
+const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
-} as const);
+});
 
-export const requireLogout = (): RequireLogout => ({
+const requireLogout = (): RequireLogout => ({
   type: ActionType.RequireLogout,
+});
+
+const login = (authData: UserInfo): Login => ({
+  type: ActionType.Login,
+  payload: authData,
+});
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 } as const);
 
 export {
@@ -75,5 +87,8 @@ export {
   loadFilmsFailed,
   loadPromoRequest,
   loadPromoSuccess,
-  loadPromoFailed
+  loadPromoFailed,
+  requireAuthorization,
+  requireLogout,
+  login
 };
