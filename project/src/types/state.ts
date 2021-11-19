@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { Film } from './film';
+import { UserInfo } from './user-info';
 
 export type State = {
   currentGenre: string;
@@ -9,7 +10,11 @@ export type State = {
   isPromoLoading: boolean;
   isPromoError: boolean;
   promo: Film;
+  isLoginLoading: boolean;
+  isLoginError: boolean;
+  authData: UserInfo;
   filmsShownAmount: number;
   authorizationStatus: AuthorizationStatus;
-  isDataLoaded: boolean,
+  isLogoutLoading: boolean;
+  isLogoutError: boolean;
 };

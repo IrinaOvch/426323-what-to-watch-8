@@ -1,0 +1,15 @@
+.btnDisabled {
+  border: 1px solid grey;
+  color: grey;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.loaderWrapper {
+  position: absolute;
+  left: 30%;
+}

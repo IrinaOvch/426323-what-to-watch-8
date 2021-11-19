@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import {
   ActionType,
   ChangeGenre,
@@ -11,9 +11,16 @@ import {
   RequireAuthorization,
   LoadPromoRequest,
   LoadPromoSuccess,
-  LoadPromoFailed
+  LoadPromoFailed,
+  LoginRequest,
+  LoginSuccess,
+  LoginFailed,
+  LogoutRequest,
+  LogoutFailed,
+  LogoutSuccess
 } from '../types/action';
 import { FilmFromServerType } from '../types/film';
+import { UserInfo } from '../types/user-info';
 
 const loadFilmsRequest = (status: boolean): LoadFilmsRequest => ({
   type: ActionType.LoadFilmsRequest,
@@ -57,13 +64,48 @@ const resetFilmsShownAmount = (): ResetFilmsShownAmount => ({
   type: ActionType.ResetFilmsShownAmount,
 });
 
-export const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization => ({
+const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
-} as const);
+});
 
-export const requireLogout = (): RequireLogout => ({
+const requireLogout = (): RequireLogout => ({
   type: ActionType.RequireLogout,
+});
+
+const loginRequest = (isLoginLoading: boolean): LoginRequest => ({
+  type: ActionType.LoginRequest,
+  payload: isLoginLoading,
+});
+
+const loginSuccess = (authData: UserInfo): LoginSuccess => ({
+  type: ActionType.LoginSuccess,
+  payload: authData,
+});
+
+const loginFailed = (isLoginError: boolean): LoginFailed => ({
+  type: ActionType.LoginFailed,
+  payload: isLoginError,
+});
+
+
+const logoutRequest = (isLogoutLoading: boolean): LogoutRequest => ({
+  type: ActionType.LogoutRequest,
+  payload: isLogoutLoading,
+});
+
+const logoutSuccess = (): LogoutSuccess => ({
+  type: ActionType.LogoutSuccess,
+});
+
+const logoutFailed = (isLogoutError: boolean): LogoutFailed => ({
+  type: ActionType.LogoutFailed,
+  payload: isLogoutError,
+});
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 } as const);
 
 export {
@@ -75,5 +117,13 @@ export {
   loadFilmsFailed,
   loadPromoRequest,
   loadPromoSuccess,
-  loadPromoFailed
+  loadPromoFailed,
+  requireAuthorization,
+  requireLogout,
+  loginRequest,
+  loginSuccess,
+  loginFailed,
+  logoutRequest,
+  logoutSuccess,
+  logoutFailed
 };

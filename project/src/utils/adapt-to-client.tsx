@@ -1,4 +1,5 @@
 import { Film, FilmFromServerType } from '../types/film';
+import { UserInfo, UserInfoFromServer } from '../types/user-info';
 
 const adaptFilmToClient = (film: FilmFromServerType): Film => {
   const adaptedFilm = Object.assign (
@@ -19,10 +20,36 @@ const adaptFilmToClient = (film: FilmFromServerType): Film => {
     },
   );
 
+  delete adaptedFilm['name'];
+  delete adaptedFilm['poster_image'];
+  delete adaptedFilm['preview_image'];
+  delete adaptedFilm['background_image'];
+  delete adaptedFilm['background_color'];
+  delete adaptedFilm['scores_count'];
+  delete adaptedFilm['run_time'];
+  delete adaptedFilm['released'];
+  delete adaptedFilm['video_link'];
+  delete adaptedFilm['preview_video_link'];
+  delete adaptedFilm['is_favorite'];
+
   return adaptedFilm;
 };
 
 const adaptFilmsToClient = (films: FilmFromServerType[]): Film[] => films.map((film) => adaptFilmToClient(film));
 
+const adaptUserToClient = (userInfo: UserInfoFromServer): UserInfo => {
+  const adaptedUserInfo = Object.assign (
+    {},
+    userInfo,
+    {
+      'avatarUrl': userInfo['avatar_url'],
+    },
+  );
 
-export { adaptFilmsToClient, adaptFilmToClient };
+  delete adaptedUserInfo['avatar_url'];
+
+  return adaptedUserInfo;
+};
+
+
+export { adaptFilmsToClient, adaptFilmToClient, adaptUserToClient };
