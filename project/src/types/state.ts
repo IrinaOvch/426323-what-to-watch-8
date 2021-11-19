@@ -10,8 +10,11 @@ export type State = {
   isPromoLoading: boolean;
   isPromoError: boolean;
   promo: Film;
+  isLoginLoading: boolean;
+  isLoginError: boolean;
+  authData: UserInfo;
   filmsShownAmount: number;
   authorizationStatus: AuthorizationStatus;
-  isDataLoaded: boolean,
-  authData: UserInfo;
+  isLogoutLoading: boolean;
+  isLogoutError: boolean;
 };

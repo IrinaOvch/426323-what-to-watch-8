@@ -12,7 +12,12 @@ import {
   LoadPromoRequest,
   LoadPromoSuccess,
   LoadPromoFailed,
-  Login
+  LoginRequest,
+  LoginSuccess,
+  LoginFailed,
+  LogoutRequest,
+  LogoutFailed,
+  LogoutSuccess
 } from '../types/action';
 import { FilmFromServerType } from '../types/film';
 import { UserInfo } from '../types/user-info';
@@ -68,9 +73,34 @@ const requireLogout = (): RequireLogout => ({
   type: ActionType.RequireLogout,
 });
 
-const login = (authData: UserInfo): Login => ({
-  type: ActionType.Login,
+const loginRequest = (isLoginLoading: boolean): LoginRequest => ({
+  type: ActionType.LoginRequest,
+  payload: isLoginLoading,
+});
+
+const loginSuccess = (authData: UserInfo): LoginSuccess => ({
+  type: ActionType.LoginSuccess,
   payload: authData,
+});
+
+const loginFailed = (isLoginError: boolean): LoginFailed => ({
+  type: ActionType.LoginFailed,
+  payload: isLoginError,
+});
+
+
+const logoutRequest = (isLogoutLoading: boolean): LogoutRequest => ({
+  type: ActionType.LogoutRequest,
+  payload: isLogoutLoading,
+});
+
+const logoutSuccess = (): LogoutSuccess => ({
+  type: ActionType.LogoutSuccess,
+});
+
+const logoutFailed = (isLogoutError: boolean): LogoutFailed => ({
+  type: ActionType.LogoutFailed,
+  payload: isLogoutError,
 });
 
 export const redirectToRoute = (url: AppRoute) => ({
@@ -90,5 +120,10 @@ export {
   loadPromoFailed,
   requireAuthorization,
   requireLogout,
-  login
+  loginRequest,
+  loginSuccess,
+  loginFailed,
+  logoutRequest,
+  logoutSuccess,
+  logoutFailed
 };

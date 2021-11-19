@@ -1,4 +1,4 @@
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, errorMessages } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
@@ -14,11 +14,14 @@ import {
   loadPromoFailed,
   requireAuthorization,
   requireLogout,
-  login,
-  redirectToRoute
+  redirectToRoute,
+  loginRequest,
+  loginSuccess,
+  loginFailed,
+  logoutFailed,
+  logoutRequest,
+  logoutSuccess
 } from './action';
-
-const AUTH_FAIL_MESSAGE = 'We can’t recognize this email <br> and password combination. Please try again.';
 
 const fetchFilms = (): ThunkActionResult => (
   async (dispatch, _, api): Promise<void> => {
@@ -54,9 +57,8 @@ const checkAuthAction = (): ThunkActionResult => (
     try {
       const { data } = await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(login(adaptUserToClient(data)));
+      dispatch(loginSuccess(adaptUserToClient(data)));
     } catch {
-      toast.info(AUTH_FAIL_MESSAGE);
       dispatch(redirectToRoute(AppRoute.SignIn));
     }
   }
@@ -64,18 +66,36 @@ const checkAuthAction = (): ThunkActionResult => (
 
 const loginAction = ({ email, password }: AuthData): ThunkActionResult => (
   async (dispatch, _, api) => {
-    const { data: { token, ...userInfo } } = await api.post(APIRoute.Login, { email, password });
-    dispatch(login(adaptUserToClient(userInfo)));
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(loginRequest(true));
+    try {
+      const { data: { token, ...userInfo } } = await api.post(APIRoute.Login, { email, password });
+      dispatch(loginSuccess(adaptUserToClient(userInfo)));
+      saveToken(token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch {
+      dispatch((loginFailed(true)));
+      toast.info(errorMessages.checkAuthFailMessage);
+    } finally {
+      dispatch(loginRequest(false));
+    }
   }
 );
 
 const logoutAction = (): ThunkActionResult => (
   async (dispatch, _, api) => {
-    api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(requireLogout());
+    dispatch(logoutRequest(true));
+    try {
+      api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(requireLogout());
+      dispatch(logoutSuccess());
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch {
+      dispatch(logoutFailed(true));
+    } finally {
+      dispatch(logoutRequest(false));
+    }
   }
 );
 

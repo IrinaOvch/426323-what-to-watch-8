@@ -17,7 +17,12 @@ export enum ActionType {
   LoadPromoFailed = 'data/loadPromoFailed',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
-  Login = 'user/login',
+  LoginRequest = 'user/loginRequest',
+  LoginSuccess = 'user/loginSuccess',
+  LoginFailed = 'user/loginFailed',
+  LogoutRequest = 'user/logoutRequest',
+  LogoutSuccess = 'user/logoutSuccess',
+  LogoutFailed = 'user/logoutFailed',
   RedirectToRoute = 'films/redirectToRoute',
 }
 
@@ -72,9 +77,33 @@ export type RequireLogout = {
   type: ActionType.RequireLogout;
 }
 
-export type Login = {
-  type: ActionType.Login;
+export type LoginRequest = {
+  type: ActionType.LoginRequest;
+  payload: boolean;
+}
+
+export type LoginSuccess = {
+  type: ActionType.LoginSuccess;
   payload: UserInfo;
+}
+
+export type LoginFailed = {
+  type: ActionType.LoginFailed;
+  payload: boolean;
+}
+
+export type LogoutRequest = {
+  type: ActionType.LogoutRequest;
+  payload: boolean;
+}
+
+export type LogoutSuccess = {
+  type: ActionType.LogoutSuccess;
+}
+
+export type LogoutFailed = {
+  type: ActionType.LogoutFailed;
+  payload: boolean;
 }
 
 export type RedirectToRoute = {
@@ -94,7 +123,12 @@ export type Actions =
   LoadPromoFailed |
   RequireAuthorization |
   RequireLogout |
-  Login |
+  LoginRequest |
+  LoginSuccess |
+  LoginFailed |
+  LogoutRequest |
+  LogoutSuccess |
+  LogoutFailed |
   RedirectToRoute;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;

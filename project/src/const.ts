@@ -21,3 +21,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export const errorMessages = {
+  checkAuthFailMessage: 'We can’t recognize this email \n and password combination. Please try again.',
+};
