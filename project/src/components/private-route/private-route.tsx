@@ -32,5 +32,5 @@ function PrivateRoute({exact, path, render, authorizationStatus}: ConnectedCompo
   );
 }
 
-export {PrivateRoute};
+export { PrivateRoute };
 export default connector(PrivateRoute);

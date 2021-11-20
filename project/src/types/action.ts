@@ -2,6 +2,7 @@ import { AxiosInstance } from 'axios';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AuthorizationStatus } from '../const';
 import { FilmFromServerType } from './film';
+import { Review } from './review';
 import { State } from './state';
 import { UserInfo } from './user-info';
 
@@ -24,6 +25,16 @@ export enum ActionType {
   LogoutSuccess = 'user/logoutSuccess',
   LogoutFailed = 'user/logoutFailed',
   RedirectToRoute = 'films/redirectToRoute',
+  LoadFilmRequest = 'data/loadFilmRequest',
+  LoadFilmSuccess = 'data/loadFilmSuccess',
+  LoadFilmFailed = 'data/loadFilmFailed',
+  LoadSimilarFilmsRequest = 'data/loadSimilarFilmsRequest',
+  LoadSimilarFilmsSuccess = 'data/loadSimilarFilmsSuccess',
+  LoadSimilarFilmsFailed = 'data/loadSimilarFilmsFailed',
+  LoadFilmReviewsRequest = 'data/loadFilmReviewsRequest',
+  LoadFilmReviewsSuccess = 'data/loadFilmReviewsSuccess',
+  LoadFilmReviewsFailed = 'data/loadFilmReviewsFailed',
+  PostReviewRequest = 'data/postReviewRequest',
 }
 
 export type ChangeGenre = {
@@ -111,6 +122,53 @@ export type RedirectToRoute = {
   payload: string;
 };
 
+export type LoadFilmRequest = {
+  type: ActionType.LoadFilmRequest;
+  payload: boolean;
+}
+
+export type LoadFilmSuccess = {
+  type: ActionType.LoadFilmSuccess;
+  payload: FilmFromServerType;
+}
+
+export type LoadFilmFailed = {
+  type: ActionType.LoadFilmFailed;
+}
+
+export type LoadSimilarFilmsRequest = {
+  type: ActionType.LoadSimilarFilmsRequest;
+  payload: boolean;
+}
+
+export type LoadSimilarFilmsSuccess = {
+  type: ActionType.LoadSimilarFilmsSuccess;
+  payload: FilmFromServerType[];
+}
+
+export type LoadSimilarFilmsFailed = {
+  type: ActionType.LoadSimilarFilmsFailed;
+}
+
+export type LoadFilmReviewsRequest = {
+  type: ActionType.LoadFilmReviewsRequest;
+  payload: boolean;
+}
+
+export type LoadFilmReviewsSuccess = {
+  type: ActionType.LoadFilmReviewsSuccess;
+  payload: Review[];
+}
+
+export type LoadFilmReviewsFailed = {
+  type: ActionType.LoadFilmReviewsFailed;
+}
+
+export type PostReviewRequest = {
+  type: ActionType.PostReviewRequest;
+  payload: boolean;
+}
+
 export type Actions =
   ChangeGenre |
   IncrementFilmsShownAmount |
@@ -129,7 +187,17 @@ export type Actions =
   LogoutRequest |
   LogoutSuccess |
   LogoutFailed |
-  RedirectToRoute;
+  LoadFilmRequest |
+  LoadFilmSuccess |
+  LoadFilmFailed |
+  LoadSimilarFilmsRequest |
+  LoadSimilarFilmsSuccess |
+  LoadSimilarFilmsFailed |
+  LoadFilmReviewsRequest |
+  LoadFilmReviewsSuccess |
+  LoadFilmReviewsFailed |
+  RedirectToRoute |
+  PostReviewRequest;
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 

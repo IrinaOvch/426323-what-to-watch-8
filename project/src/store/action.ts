@@ -1,4 +1,4 @@
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AuthorizationStatus } from '../const';
 import {
   ActionType,
   ChangeGenre,
@@ -17,9 +17,20 @@ import {
   LoginFailed,
   LogoutRequest,
   LogoutFailed,
-  LogoutSuccess
+  LogoutSuccess,
+  LoadFilmRequest,
+  LoadFilmSuccess,
+  LoadFilmFailed,
+  LoadSimilarFilmsRequest,
+  LoadSimilarFilmsSuccess,
+  LoadSimilarFilmsFailed,
+  LoadFilmReviewsRequest,
+  LoadFilmReviewsSuccess,
+  LoadFilmReviewsFailed,
+  PostReviewRequest
 } from '../types/action';
 import { FilmFromServerType } from '../types/film';
+import { Review } from '../types/review';
 import { UserInfo } from '../types/user-info';
 
 const loadFilmsRequest = (status: boolean): LoadFilmsRequest => ({
@@ -103,10 +114,57 @@ const logoutFailed = (isLogoutError: boolean): LogoutFailed => ({
   payload: isLogoutError,
 });
 
-export const redirectToRoute = (url: AppRoute) => ({
+export const redirectToRoute = (url: string) => ({
   type: ActionType.RedirectToRoute,
   payload: url,
 } as const);
+
+const loadFilmRequest = (status: boolean): LoadFilmRequest => ({
+  type: ActionType.LoadFilmRequest,
+  payload: status,
+});
+
+const loadFilmSuccess = (film: FilmFromServerType): LoadFilmSuccess => ({
+  type: ActionType.LoadFilmSuccess,
+  payload: film,
+});
+
+const loadFilmFailed = (): LoadFilmFailed => ({
+  type: ActionType.LoadFilmFailed,
+});
+
+const loadSimilarFilmsRequest = (status: boolean): LoadSimilarFilmsRequest => ({
+  type: ActionType.LoadSimilarFilmsRequest,
+  payload: status,
+});
+
+const loadSimilarFilmsSuccess = (similarFilms: FilmFromServerType[]): LoadSimilarFilmsSuccess => ({
+  type: ActionType.LoadSimilarFilmsSuccess,
+  payload: similarFilms,
+});
+
+const loadSimilarFilmsFailed = (): LoadSimilarFilmsFailed => ({
+  type: ActionType.LoadSimilarFilmsFailed,
+});
+
+const loadFilmReviewsRequest = (status: boolean): LoadFilmReviewsRequest => ({
+  type: ActionType.LoadFilmReviewsRequest,
+  payload: status,
+});
+
+const loadFilmReviewsSuccess = (reviews: Review[]): LoadFilmReviewsSuccess => ({
+  type: ActionType.LoadFilmReviewsSuccess,
+  payload: reviews,
+});
+
+const loadFilmReviewsFailed = (): LoadFilmReviewsFailed => ({
+  type: ActionType.LoadFilmReviewsFailed,
+});
+
+const postReviewRequest = (status: boolean): PostReviewRequest => ({
+  type: ActionType.PostReviewRequest,
+  payload: status,
+});
 
 export {
   changeGenre,
@@ -125,5 +183,15 @@ export {
   loginFailed,
   logoutRequest,
   logoutSuccess,
-  logoutFailed
+  logoutFailed,
+  loadFilmRequest,
+  loadFilmSuccess,
+  loadFilmFailed,
+  loadSimilarFilmsRequest,
+  loadSimilarFilmsSuccess,
+  loadSimilarFilmsFailed,
+  loadFilmReviewsRequest,
+  loadFilmReviewsSuccess,
+  loadFilmReviewsFailed,
+  postReviewRequest
 };

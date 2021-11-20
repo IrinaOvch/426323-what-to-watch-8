@@ -24,4 +24,5 @@ export enum APIRoute {
 
 export const errorMessages = {
   checkAuthFailMessage: 'We can’t recognize this email \n and password combination. Please try again.',
+  genericError: 'Something went wrong, please try again.',
 };

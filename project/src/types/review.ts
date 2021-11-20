@@ -9,4 +9,9 @@ type Review = {
   date: string,
 }
 
-export type { Review };
+type ReviewToServer = {
+  rating: number;
+  comment: string;
+}
+
+export type { Review, ReviewToServer };
