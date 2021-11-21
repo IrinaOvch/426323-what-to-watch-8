@@ -1,197 +1,179 @@
+import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
-import {
-  ActionType,
-  ChangeGenre,
-  IncrementFilmsShownAmount,
-  LoadFilmsRequest,
-  LoadFilmsSuccess,
-  LoadFilmsFailed,
-  ResetFilmsShownAmount,
-  RequireLogout,
-  RequireAuthorization,
-  LoadPromoRequest,
-  LoadPromoSuccess,
-  LoadPromoFailed,
-  LoginRequest,
-  LoginSuccess,
-  LoginFailed,
-  LogoutRequest,
-  LogoutFailed,
-  LogoutSuccess,
-  LoadFilmRequest,
-  LoadFilmSuccess,
-  LoadFilmFailed,
-  LoadSimilarFilmsRequest,
-  LoadSimilarFilmsSuccess,
-  LoadSimilarFilmsFailed,
-  LoadFilmReviewsRequest,
-  LoadFilmReviewsSuccess,
-  LoadFilmReviewsFailed,
-  PostReviewRequest
-} from '../types/action';
+import { ActionType } from '../types/action';
 import { FilmFromServerType } from '../types/film';
 import { Review } from '../types/review';
 import { UserInfo } from '../types/user-info';
 
-const loadFilmsRequest = (status: boolean): LoadFilmsRequest => ({
-  type: ActionType.LoadFilmsRequest,
-  payload: status,
-});
+export const loadFilmsRequest = createAction(
+  ActionType.LoadFilmsRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
 
-const loadFilmsSuccess = (films: FilmFromServerType[]): LoadFilmsSuccess => ({
-  type: ActionType.LoadFilmsSuccess,
-  payload: films,
-});
+export const loadFilmsSuccess = createAction(
+  ActionType.LoadFilmsSuccess,
+  (films: FilmFromServerType[]) => ({
+    payload: films,
+  }),
+);
 
-const loadFilmsFailed = (): LoadFilmsFailed => ({
-  type: ActionType.LoadFilmsFailed,
-});
+export const loadFilmsFailed = createAction(
+  ActionType.LoadFilmsFailed,
+);
 
-const loadPromoRequest = (status: boolean): LoadPromoRequest => ({
-  type: ActionType.LoadPromoRequest,
-  payload: status,
-});
+export const loadPromoRequest = createAction(
+  ActionType.LoadPromoRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
 
-const loadPromoSuccess = (promoFilm: FilmFromServerType): LoadPromoSuccess => ({
-  type: ActionType.LoadPromoSuccess,
-  payload: promoFilm,
-});
+export const loadPromoSuccess = createAction(
+  ActionType.LoadPromoSuccess,
+  (promoFilm: FilmFromServerType) => ({
+    payload: promoFilm,
+  }),
+);
 
-const loadPromoFailed = (): LoadPromoFailed => ({
-  type: ActionType.LoadPromoFailed,
-});
+export const loadPromoFailed = createAction(
+  ActionType.LoadPromoFailed,
+);
 
-const changeGenre = (genre: string): ChangeGenre => ({
-  type: ActionType.ChangeGenre,
-  payload: genre,
-});
+export const changeGenre = createAction(
+  ActionType.ChangeGenre,
+  (genre: string) => ({
+    payload: genre,
+  }),
+);
 
-const incrementFilmsShownAmount = (amount: number): IncrementFilmsShownAmount => ({
-  type: ActionType.IncrementFilmsShownAmount,
-  payload: amount,
-});
+export const incrementFilmsShownAmount = createAction(
+  ActionType.IncrementFilmsShownAmount,
+  (amount: number) => ({
+    payload: amount,
+  }),
+);
 
-const resetFilmsShownAmount = (): ResetFilmsShownAmount => ({
-  type: ActionType.ResetFilmsShownAmount,
-});
+export const resetFilmsShownAmount = createAction(
+  ActionType.ResetFilmsShownAmount,
+);
 
-const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization => ({
-  type: ActionType.RequireAuthorization,
-  payload: authStatus,
-});
+export const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authStatus: AuthorizationStatus) => ({
+    payload: authStatus,
+  }),
+);
 
-const requireLogout = (): RequireLogout => ({
-  type: ActionType.RequireLogout,
-});
+export const requireLogout = createAction(
+  ActionType.RequireLogout,
+);
 
-const loginRequest = (isLoginLoading: boolean): LoginRequest => ({
-  type: ActionType.LoginRequest,
-  payload: isLoginLoading,
-});
+export const loginRequest = createAction(
+  ActionType.LoginRequest,
+  (isLoginLoading: boolean) => ({
+    payload: isLoginLoading,
+  }),
+);
 
-const loginSuccess = (authData: UserInfo): LoginSuccess => ({
-  type: ActionType.LoginSuccess,
-  payload: authData,
-});
+export const loginSuccess = createAction(
+  ActionType.LoginSuccess,
+  (authData: UserInfo) => ({
+    payload: authData,
+  }),
+);
 
-const loginFailed = (isLoginError: boolean): LoginFailed => ({
-  type: ActionType.LoginFailed,
-  payload: isLoginError,
-});
+export const loginFailed = createAction(
+  ActionType.LoginFailed,
+  (isLoginError: boolean) => ({
+    payload: isLoginError,
+  }),
+);
+
+export const logoutRequest = createAction(
+  ActionType.LogoutRequest,
+  (isLogoutLoading: boolean) => ({
+    payload: isLogoutLoading,
+  }),
+);
+
+export const logoutSuccess = createAction(
+  ActionType.LogoutSuccess,
+);
+
+export const logoutFailed = createAction(
+  ActionType.LogoutFailed,
+  (isLogoutError: boolean) => ({
+    payload: isLogoutError,
+  }),
+);
 
 
-const logoutRequest = (isLogoutLoading: boolean): LogoutRequest => ({
-  type: ActionType.LogoutRequest,
-  payload: isLogoutLoading,
-});
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (url: string) => ({
+    payload: url,
+  }),
+);
 
-const logoutSuccess = (): LogoutSuccess => ({
-  type: ActionType.LogoutSuccess,
-});
+export const loadFilmRequest = createAction(
+  ActionType.LoadFilmRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
 
-const logoutFailed = (isLogoutError: boolean): LogoutFailed => ({
-  type: ActionType.LogoutFailed,
-  payload: isLogoutError,
-});
+export const loadFilmSuccess = createAction(
+  ActionType.LoadFilmSuccess,
+  (film: FilmFromServerType) => ({
+    payload: film,
+  }),
+);
 
-export const redirectToRoute = (url: string) => ({
-  type: ActionType.RedirectToRoute,
-  payload: url,
-} as const);
+export const loadFilmFailed = createAction(
+  ActionType.LoadFilmFailed,
+);
 
-const loadFilmRequest = (status: boolean): LoadFilmRequest => ({
-  type: ActionType.LoadFilmRequest,
-  payload: status,
-});
+export const loadSimilarFilmsRequest = createAction(
+  ActionType.LoadSimilarFilmsRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
 
-const loadFilmSuccess = (film: FilmFromServerType): LoadFilmSuccess => ({
-  type: ActionType.LoadFilmSuccess,
-  payload: film,
-});
+export const loadSimilarFilmsSuccess = createAction(
+  ActionType.LoadSimilarFilmsSuccess,
+  (similarFilms: FilmFromServerType[]) => ({
+    payload: similarFilms,
+  }),
+);
 
-const loadFilmFailed = (): LoadFilmFailed => ({
-  type: ActionType.LoadFilmFailed,
-});
+export const loadSimilarFilmsFailed = createAction(
+  ActionType.LoadSimilarFilmsFailed,
+);
 
-const loadSimilarFilmsRequest = (status: boolean): LoadSimilarFilmsRequest => ({
-  type: ActionType.LoadSimilarFilmsRequest,
-  payload: status,
-});
+export const loadFilmReviewsRequest = createAction(
+  ActionType.LoadFilmReviewsRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
 
-const loadSimilarFilmsSuccess = (similarFilms: FilmFromServerType[]): LoadSimilarFilmsSuccess => ({
-  type: ActionType.LoadSimilarFilmsSuccess,
-  payload: similarFilms,
-});
+export const loadFilmReviewsSuccess = createAction(
+  ActionType.LoadFilmReviewsSuccess,
+  (reviews: Review[]) => ({
+    payload: reviews,
+  }),
+);
 
-const loadSimilarFilmsFailed = (): LoadSimilarFilmsFailed => ({
-  type: ActionType.LoadSimilarFilmsFailed,
-});
+export const loadFilmReviewsFailed = createAction(
+  ActionType.LoadFilmReviewsFailed,
+);
 
-const loadFilmReviewsRequest = (status: boolean): LoadFilmReviewsRequest => ({
-  type: ActionType.LoadFilmReviewsRequest,
-  payload: status,
-});
-
-const loadFilmReviewsSuccess = (reviews: Review[]): LoadFilmReviewsSuccess => ({
-  type: ActionType.LoadFilmReviewsSuccess,
-  payload: reviews,
-});
-
-const loadFilmReviewsFailed = (): LoadFilmReviewsFailed => ({
-  type: ActionType.LoadFilmReviewsFailed,
-});
-
-const postReviewRequest = (status: boolean): PostReviewRequest => ({
-  type: ActionType.PostReviewRequest,
-  payload: status,
-});
-
-export {
-  changeGenre,
-  incrementFilmsShownAmount,
-  resetFilmsShownAmount,
-  loadFilmsRequest,
-  loadFilmsSuccess,
-  loadFilmsFailed,
-  loadPromoRequest,
-  loadPromoSuccess,
-  loadPromoFailed,
-  requireAuthorization,
-  requireLogout,
-  loginRequest,
-  loginSuccess,
-  loginFailed,
-  logoutRequest,
-  logoutSuccess,
-  logoutFailed,
-  loadFilmRequest,
-  loadFilmSuccess,
-  loadFilmFailed,
-  loadSimilarFilmsRequest,
-  loadSimilarFilmsSuccess,
-  loadSimilarFilmsFailed,
-  loadFilmReviewsRequest,
-  loadFilmReviewsSuccess,
-  loadFilmReviewsFailed,
-  postReviewRequest
-};
+export const postReviewRequest = createAction(
+  ActionType.PostReviewRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);

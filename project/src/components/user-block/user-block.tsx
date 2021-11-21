@@ -1,20 +1,13 @@
 import { Link } from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import { State } from '../../types/state';
+import { useSelector} from 'react-redux';
 import SignOutButton from '../sign-out-button/sign-out-button';
 import { AuthorizationStatus } from '../../const';
+import { getAuthData, getAuthorizationStatus } from '../../store/user-process/selectors';
 
-const mapStateToProps = ({authorizationStatus, authData}: State) => ({
-  authorizationStatus,
-  authData,
-});
+function UserBlock(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authData = useSelector(getAuthData);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
-
-function UserBlock({authorizationStatus, authData}: ConnectedComponentProps): JSX.Element {
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (
       <ul className="user-block">
@@ -41,5 +34,4 @@ function UserBlock({authorizationStatus, authData}: ConnectedComponentProps): JS
   );
 }
 
-export {UserBlock};
-export default connector(UserBlock);
+export default UserBlock;

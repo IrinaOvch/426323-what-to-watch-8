@@ -1,12 +1,12 @@
 import { FormEvent, useState, ChangeEvent, useEffect} from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames/bind';
 import SignInButton from '../../components/sign-in-button/sign-in-button';
 import { loginAction } from '../../store/api-actions';
 import { redirectToRoute } from '../../store/action';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { State } from '../../types/state';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type FieldProps = {
   value: string;
@@ -23,15 +23,8 @@ const formFields = {
   password: 'Password',
 };
 
-const mapStateToProps = ({authorizationStatus}: State) => ({
-  authorizationStatus,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function AuthScreen({authorizationStatus}: PropsFromRedux): JSX.Element {
+function AuthScreen(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const [formState, setFormState] = useState<FormStateProps>({
     email: {
       value: '',
@@ -135,5 +128,4 @@ function AuthScreen({authorizationStatus}: PropsFromRedux): JSX.Element {
   );
 }
 
-export { AuthScreen };
-export default connector(AuthScreen);
+export default AuthScreen;

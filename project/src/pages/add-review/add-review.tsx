@@ -1,22 +1,15 @@
-import {connect, ConnectedProps} from 'react-redux';
+import { useSelector} from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Header from '../../components/header/header';
-import { State } from '../../types/state';
+import { getFilms } from '../../store/films-data/selectors';
 
 type PageParams = {
   id: string
 }
 
-const mapStateToProps = ({films}: State) => ({
-  films,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function AddReview({films}: PropsFromRedux): JSX.Element {
+function AddReview(): JSX.Element {
+  const films = useSelector(getFilms);
   const { id } = useParams<PageParams>();
   const activeFilm = films.find((film) => film.id === Number(id));
 
@@ -46,5 +39,4 @@ function AddReview({films}: PropsFromRedux): JSX.Element {
   );
 }
 
-export { AddReview };
-export default connector(AddReview);
+export default AddReview;

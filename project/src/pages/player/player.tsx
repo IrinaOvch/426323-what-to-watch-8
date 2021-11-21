@@ -1,21 +1,14 @@
-import {connect, ConnectedProps} from 'react-redux';
+import { useSelector} from 'react-redux';
 import { useParams, Redirect } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { State } from '../../types/state';
+import { getFilms } from '../../store/films-data/selectors';
 
 type PageParams = {
   id: string
 }
 
-const mapStateToProps = ({films}: State) => ({
-  films,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Player({films}: PropsFromRedux): JSX.Element {
+function Player(): JSX.Element {
+  const films = useSelector(getFilms);
   const { id } = useParams<PageParams>();
   const activeFilm = films.find((film) => film.id === Number(id));
 
@@ -59,5 +52,4 @@ function Player({films}: PropsFromRedux): JSX.Element {
   );
 }
 
-export { Player };
-export default connector(Player);
+export default Player;

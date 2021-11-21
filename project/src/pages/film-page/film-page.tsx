@@ -1,16 +1,15 @@
 import { useParams } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
-import { ThunkAppDispatch } from '../../types/action';
+import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FilmsList from '../../components/films-list/films-list';
 import Tabs from '../../components/film-card-tabs/film-card-tabs';
 import FilmActions from '../../components/film-actions/film-actions';
-import { State } from '../../types/state';
 import { fetchFilmAction, fetchFilmReviewsAction, fetchSimilarFilms } from '../../store/api-actions';
 import { useEffect } from 'react';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import NotFoundScreen from '../page-not-found/page-not-found';
+import { getFilm, getFilmLoadingStatus, getSimilarFilms } from '../../store/films-data/selectors';
 
 const SIMILAR_AMOUNT = 4;
 
@@ -18,46 +17,24 @@ type PageParams = {
   id: string
 }
 
-const mapStateToProps = ({film, similarFilms, isFilmLoading}: State) => ({
-  film,
-  similarFilms,
-  isFilmLoading,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onFetchFilm(id: number) {
-    dispatch(fetchFilmAction(id));
-  },
-  onFetchSimilarFilms(id: number) {
-    dispatch(fetchSimilarFilms(id));
-  },
-  onfetchFilmReviews(id: number) {
-    dispatch(fetchFilmReviewsAction(id));
-  },
-});
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-function FilmPage({
-  film,
-  similarFilms,
-  isFilmLoading,
-  onFetchFilm,
-  onFetchSimilarFilms,
-  onfetchFilmReviews,
-}: PropsFromRedux): JSX.Element {
+function FilmPage(): JSX.Element {
   const { id } = useParams<PageParams>();
+
+  const film = useSelector(getFilm);
+  const similarFilms = useSelector(getSimilarFilms);
+  const isFilmLoading = useSelector(getFilmLoadingStatus);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!id) {
       return;
     }
-    onFetchFilm(Number(id));
-    onFetchSimilarFilms(Number(id));
-    onfetchFilmReviews(Number(id));
+    dispatch(fetchFilmAction(Number(id)));
+    dispatch(fetchSimilarFilms(Number(id)));
+    dispatch(fetchFilmReviewsAction(Number(id)));
 
-  }, [onFetchFilm, onFetchSimilarFilms, onfetchFilmReviews, id]);
+  }, [dispatch, id]);
 
   if (isFilmLoading) {
     return <LoadingScreen />;
@@ -116,5 +93,4 @@ function FilmPage({
   );
 }
 
-export { FilmPage };
-export default connector(FilmPage);
+export default FilmPage;

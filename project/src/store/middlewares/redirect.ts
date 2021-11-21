@@ -1,11 +1,9 @@
 import { ActionType } from '../../types/action';
 import { Middleware } from 'redux';
 import browserHistory from '../../browse-history';
-import { reducer } from '../reducer';
+import { State } from '../../types/state';
 
-type Reducer = ReturnType<typeof reducer>;
-
-export const redirect: Middleware<unknown, Reducer> =
+export const redirect: Middleware<unknown, State> =
   (_store) =>
     (next) =>
       (action) => {

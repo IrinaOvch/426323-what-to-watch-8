@@ -1,36 +1,20 @@
 import { MouseEvent } from 'react';
-import { Dispatch } from 'redux';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames/bind';
-import { Actions } from '../../types/action';
 import { changeGenre } from '../../store/action';
-import { State } from '../../types/state';
+import { getcurrentGenre } from '../../store/films-process/selectors';
 
 type GenresListProps = {
   genres: string[];
 }
 
-const mapStateToProps = ({currentGenre}: State) => ({
-  currentGenre,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onGenreChange(genre: string) {
-    dispatch(changeGenre(genre));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & GenresListProps;
-
-
-function GenresList(props: ConnectedComponentProps): JSX.Element {
-  const {currentGenre, onGenreChange, genres} = props;
+function GenresList(props: GenresListProps): JSX.Element {
+  const {genres} = props;
+  const currentGenre = useSelector(getcurrentGenre);
+  const dispatch = useDispatch();
   const handleGenreClick = (evt: MouseEvent<HTMLAnchorElement>, genre: string) => {
     evt.preventDefault();
-    onGenreChange(genre);
+    dispatch(changeGenre(genre));
   };
 
   return (
@@ -53,5 +37,4 @@ function GenresList(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export { GenresList };
-export default connector(GenresList);
+export default GenresList;
