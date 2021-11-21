@@ -1,7 +1,25 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Film } from '../../types/film';
 import { FilmsData } from '../../types/state';
-import { loadFilmFailed, loadFilmRequest, loadFilmsFailed, loadFilmsRequest, loadFilmsSuccess, loadFilmSuccess, loadPromoFailed, loadPromoRequest, loadPromoSuccess, loadSimilarFilmsFailed, loadSimilarFilmsRequest, loadSimilarFilmsSuccess } from '../action';
+import {
+  addToMyListRequest,
+  loadFilmFailed,
+  loadFilmRequest,
+  loadFilmsFailed,
+  loadFilmsRequest,
+  loadFilmsSuccess,
+  loadFilmSuccess,
+  loadMyListFailed,
+  loadMyListRequest,
+  loadMyListSuccess,
+  loadPromoFailed,
+  loadPromoRequest,
+  loadPromoSuccess,
+  loadSimilarFilmsFailed,
+  loadSimilarFilmsRequest,
+  loadSimilarFilmsSuccess,
+  updateFilmFavouriteStatus
+} from '../action';
 
 const initialState: FilmsData = {
   isFilmsLoading: false,
@@ -16,6 +34,10 @@ const initialState: FilmsData = {
   isSimilarFilmsLoading: false,
   isSimilarFilmsError: false,
   similarFilms: [],
+  isMyListLoading: false,
+  isMyListError: false,
+  myList: [] as Film[],
+  isAddMyListLoading: false,
 };
 
 const filmsData = createReducer(initialState, (builder) => {
@@ -55,6 +77,26 @@ const filmsData = createReducer(initialState, (builder) => {
     })
     .addCase(loadSimilarFilmsFailed, (state) => {
       state.isSimilarFilmsError = true;
+    })
+    .addCase(loadMyListRequest, (state, action) => {
+      state.isMyListLoading = action.payload;
+    })
+    .addCase(loadMyListSuccess, (state, action) => {
+      state.myList = action.payload;
+    })
+    .addCase(loadMyListFailed, (state) => {
+      state.isMyListError = true;
+    })
+    .addCase(addToMyListRequest, (state, action) => {
+      state.isAddMyListLoading = action.payload;
+    })
+    .addCase(updateFilmFavouriteStatus, (state, action) => {
+      if (state.promo?.id === action.payload.id) {
+        state.promo.isFavourite = action.payload.status;
+      }
+      if (state.film?.id === action.payload.id) {
+        state.film.isFavourite = action.payload.status;
+      }
     });
 });
 

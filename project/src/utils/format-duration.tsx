@@ -14,4 +14,12 @@ const formatDuration = (runTimeSeconds: number | undefined): string => {
   return dayjs.duration(runTime).format('mm:ss');
 };
 
-export { formatDuration };
+const formatRunTime = (runTimeMinutes: number | undefined): string => {
+  if (!runTimeMinutes) {
+    return '';
+  }
+  const runTime = runTimeMinutes * 60000;
+  return dayjs.duration(runTime).format('HH[h] mm[m]');
+};
+
+export { formatDuration, formatRunTime };

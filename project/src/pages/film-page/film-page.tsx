@@ -8,8 +8,8 @@ import FilmActions from '../../components/film-actions/film-actions';
 import { fetchFilmAction, fetchFilmReviewsAction, fetchSimilarFilms } from '../../store/api-actions';
 import { useEffect } from 'react';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { getFilm, getFilmErrorStatus, getFilmLoadingStatus, getSimilarFilms, getSimilarFilmsErrorStatus } from '../../store/films-data/selectors';
 import NotFoundScreen from '../page-not-found/page-not-found';
-import { getFilm, getFilmLoadingStatus, getSimilarFilms } from '../../store/films-data/selectors';
 
 const SIMILAR_AMOUNT = 4;
 
@@ -19,28 +19,29 @@ type PageParams = {
 
 function FilmPage(): JSX.Element {
   const { id } = useParams<PageParams>();
+  const dispatch = useDispatch();
 
   const film = useSelector(getFilm);
   const similarFilms = useSelector(getSimilarFilms);
   const isFilmLoading = useSelector(getFilmLoadingStatus);
+  const isFilmError = useSelector(getFilmErrorStatus);
+  const isSimilarFilmsError = useSelector(getSimilarFilmsErrorStatus);
 
-  const dispatch = useDispatch();
+  if (Object.entries(film).length === 0) {
+    dispatch(fetchFilmAction(Number(id)));
+  }
 
   useEffect(() => {
-    if (!id) {
-      return;
-    }
     dispatch(fetchFilmAction(Number(id)));
     dispatch(fetchSimilarFilms(Number(id)));
     dispatch(fetchFilmReviewsAction(Number(id)));
-
   }, [dispatch, id]);
 
   if (isFilmLoading) {
     return <LoadingScreen />;
   }
 
-  if (!film.id) {
+  if (isFilmError) {
     return <NotFoundScreen/>;
   }
 
@@ -63,7 +64,7 @@ function FilmPage(): JSX.Element {
                 <span className="film-card__genre">{film.genre}</span>
                 <span className="film-card__year">{film.releaseYear}</span>
               </p>
-              <FilmActions filmId={film.id}/>
+              <FilmActions filmId={film.id} isFavourite={film.isFavourite}/>
             </div>
           </div>
         </div>
@@ -86,6 +87,8 @@ function FilmPage(): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <FilmsList films={similarFilms.slice(0, SIMILAR_AMOUNT)}/>
+          {isSimilarFilmsError &&
+          <p>An error ocured while loading similar films, please try reloading the page</p>}
         </section>
         <Footer/>
       </div>

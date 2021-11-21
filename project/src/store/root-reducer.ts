@@ -8,7 +8,7 @@ export enum NameSpace {
   Films = 'FILMS',
   Reviews = 'REVIEWS',
   User = 'USER',
-  App = 'APP'
+  App = 'APP',
 }
 
 

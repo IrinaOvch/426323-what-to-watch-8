@@ -13,11 +13,9 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/is-checked-auth';
 import browserHistory from '../../browse-history';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { getFilms } from '../../store/films-data/selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const films = useSelector(getFilms);
 
   if (isCheckedAuth(authorizationStatus)) {
     return (
@@ -37,7 +35,7 @@ function App(): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyList films={films} />}
+          render={() => <MyList />}
         />
         <Route exact path={AppRoute.Film}>
           <FilmPage />
@@ -50,12 +48,14 @@ function App(): JSX.Element {
         <Route exact path={AppRoute.Player}>
           <Player/>
         </Route>
+        <Route exact path={AppRoute.NotFound}>
+          <NotFoundScreen />
+        </Route>
         <Route>
           <NotFoundScreen />
         </Route>
       </Switch>
     </BrowserRouter>
-
   );
 }
 

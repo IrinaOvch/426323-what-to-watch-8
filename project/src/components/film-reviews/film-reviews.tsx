@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+import { getFilmReviewsErrorStatus } from '../../store/reviews-data/selectors';
 import { Review } from '../../types/review';
 import ReviewElement from '../review/review';
 
@@ -6,10 +8,11 @@ type TabReviewsProps = {
 }
 
 function TabReviews({reviews}: TabReviewsProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log('reviews', reviews);
+  const isFilmReviewsError = useSelector(getFilmReviewsErrorStatus);
   return (
     <div className="film-card__reviews film-card__row">
+      {isFilmReviewsError &&
+          <p>An error ocured while loading similar films, please try reloading the page</p>}
       <div className="film-card__reviews-col">
         {reviews.slice(0, Math.ceil(reviews.length / 2)).map((review) => <ReviewElement review={review} key={review.id}/>)}
       </div>

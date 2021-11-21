@@ -177,3 +177,38 @@ export const postReviewRequest = createAction(
     payload: status,
   }),
 );
+
+export const loadMyListRequest = createAction(
+  ActionType.LoadMyListRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
+
+export const loadMyListSuccess = createAction(
+  ActionType.LoadMyListSuccess,
+  (myList: FilmFromServerType[]) => ({
+    payload: myList,
+  }),
+);
+
+export const loadMyListFailed = createAction(
+  ActionType.LoadMyListFailed,
+);
+
+export const addToMyListRequest = createAction(
+  ActionType.AddMyListRequest,
+  (status: boolean) => ({
+    payload: status,
+  }),
+);
+
+export const updateFilmFavouriteStatus = createAction(
+  ActionType.UpdateFilmFavouriteStatus,
+  (id: number, status: boolean) => ({
+    payload: {
+      id,
+      status,
+    },
+  }),
+);

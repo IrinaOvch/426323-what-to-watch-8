@@ -1,14 +1,14 @@
 
-import { Film } from '../../types/film';
+import { useSelector } from 'react-redux';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { getMyList, getMyListErrorStatus } from '../../store/films-data/selectors';
 
-type MyListProps = {
-  films: Film[]
-}
+function MyList(): JSX.Element {
+  const myList = useSelector(getMyList);
+  const isMyListError = useSelector(getMyListErrorStatus);
 
-function MyList({films}: MyListProps): JSX.Element {
   return (
     <div className="user-page">
       <Header className="user-page__head" isUserBlock>
@@ -17,7 +17,15 @@ function MyList({films}: MyListProps): JSX.Element {
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmsList films={films}/>
+        <FilmsList films={myList}/>
+        {
+          (myList.length === 0 && !isMyListError) &&
+          <p style={{textAlign:'center'}}>Your list is empty, add your first film by clicking My list button.</p>
+        }
+        {
+          isMyListError &&
+          <p style={{textAlign:'center'}}>An error ocured while loading your list, please try reloading the page.</p>
+        }
       </section>
 
       <Footer />

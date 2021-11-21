@@ -78,7 +78,7 @@ function MainPage(): JSX.Element {
                 <span className="film-card__genre">{promo.genre}</span>
                 <span className="film-card__year">{promo.releaseYear}</span>
               </p>
-              <FilmActions filmId={promo.id} />
+              <FilmActions filmId={promo.id} isFavourite={promo.isFavourite}/>
             </div>
           </div>
         </div>

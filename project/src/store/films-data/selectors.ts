@@ -14,3 +14,6 @@ export const getFilm = (state: State): Film => state[NameSpace.Films].film;
 export const getSimilarFilmsLoadingStatus = (state: State): boolean => state[NameSpace.Films].isSimilarFilmsLoading;
 export const getSimilarFilmsErrorStatus = (state: State): boolean => state[NameSpace.Films].isSimilarFilmsError;
 export const getSimilarFilms = (state: State): Film[] => state[NameSpace.Films].similarFilms;
+export const getMyListStatus = (state: State): boolean => state[NameSpace.Films].isMyListLoading;
+export const getMyListErrorStatus = (state: State): boolean => state[NameSpace.Films].isMyListError;
+export const getMyList = (state: State): Film[] => state[NameSpace.Films].myList;

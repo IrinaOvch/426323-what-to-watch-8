@@ -17,6 +17,10 @@ export type FilmsData = {
   isSimilarFilmsLoading: boolean;
   isSimilarFilmsError: boolean;
   similarFilms: Film[];
+  isMyListLoading: boolean;
+  isMyListError: boolean;
+  myList: Film[],
+  isAddMyListLoading: boolean;
 }
 
 export type UserProcess = {

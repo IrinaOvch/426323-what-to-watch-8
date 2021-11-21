@@ -7,7 +7,7 @@ import { rootReducer } from './store/root-reducer';
 import { createAPI } from './services/api';
 import { requireAuthorization } from './store/action';
 import { AuthorizationStatus } from './const';
-import { checkAuthAction, fetchFilms, fetchPromo } from './store/api-actions';
+import { checkAuthAction, fetchFilms, fetchMyListAction, fetchPromo } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { redirect } from './store/middlewares/redirect';
@@ -29,6 +29,7 @@ const store = configureStore({
 (store.dispatch)(checkAuthAction());
 (store.dispatch)(fetchFilms());
 (store.dispatch)(fetchPromo());
+(store.dispatch)(fetchMyListAction());
 
 ReactDOM.render(
   <React.StrictMode>
