@@ -3,7 +3,7 @@ import { dropToken, saveToken } from '../services/token';
 import { ThunkActionResult } from '../types/action';
 import { AuthData } from '../types/auth-data';
 import { FilmFromServerType } from '../types/film';
-import { adaptUserToClient } from '../utils/adapt-to-client';
+import { adaptFilmsToClient, adaptFilmToClient, adaptUserToClient } from '../utils/adapt-to-client';
 import { toast } from 'react-toastify';
 import {
   loadFilmsRequest,
@@ -20,15 +20,26 @@ import {
   loginFailed,
   logoutFailed,
   logoutRequest,
-  logoutSuccess
+  logoutSuccess,
+  loadFilmRequest,
+  loadFilmSuccess,
+  loadFilmFailed,
+  loadSimilarFilmsRequest,
+  loadSimilarFilmsSuccess,
+  loadSimilarFilmsFailed,
+  loadFilmReviewsRequest,
+  loadFilmReviewsSuccess,
+  loadFilmReviewsFailed,
+  postReviewRequest
 } from './action';
+import { Review, ReviewToServer } from '../types/review';
 
 const fetchFilms = (): ThunkActionResult => (
   async (dispatch, _, api): Promise<void> => {
     dispatch(loadFilmsRequest(true));
     try {
       const { data } = await api.get<FilmFromServerType[]>(APIRoute.Films);
-      dispatch(loadFilmsSuccess(data));
+      dispatch(loadFilmsSuccess(adaptFilmsToClient(data)));
     } catch (error) {
       dispatch(loadFilmsFailed());
     } finally {
@@ -43,7 +54,7 @@ const fetchPromo = (): ThunkActionResult => (
     dispatch(loadPromoRequest(true));
     try {
       const { data } = await api.get<FilmFromServerType>(APIRoute.Promo);
-      dispatch(loadPromoSuccess(data));
+      dispatch(loadPromoSuccess(adaptFilmToClient(data)));
     } catch (e) {
       dispatch(loadPromoFailed());
     } finally {
@@ -99,5 +110,71 @@ const logoutAction = (): ThunkActionResult => (
   }
 );
 
-export { fetchFilms, fetchPromo, checkAuthAction, loginAction, logoutAction };
+const fetchFilmAction = (id: number): ThunkActionResult => (
+  async (dispatch, _, api): Promise<void> => {
+    dispatch(loadFilmRequest(true));
+    try {
+      const { data } = await api.get<FilmFromServerType>(`/films/${id}`);
+      dispatch(loadFilmSuccess(adaptFilmToClient(data)));
+    } catch (error) {
+      dispatch(loadFilmFailed());
+    } finally {
+      dispatch(loadFilmRequest(false));
+    }
+  }
+);
+
+const fetchSimilarFilms = (id: number): ThunkActionResult => (
+  async (dispatch, _, api): Promise<void> => {
+    dispatch(loadSimilarFilmsRequest(true));
+    try {
+      const { data } = await api.get<FilmFromServerType[]>(`/films/${id}/similar`);
+      dispatch(loadSimilarFilmsSuccess(adaptFilmsToClient(data)));
+    } catch (error) {
+      dispatch(loadSimilarFilmsFailed());
+    } finally {
+      dispatch(loadSimilarFilmsRequest(false));
+    }
+  }
+);
+
+const fetchFilmReviewsAction = (id: number): ThunkActionResult => (
+  async (dispatch, _, api): Promise<void> => {
+    dispatch(loadFilmReviewsRequest(true));
+    try {
+      const { data } = await api.get<Review[]>(`/comments/${id}`);
+      dispatch(loadFilmReviewsSuccess(data));
+    } catch (error) {
+      dispatch(loadFilmReviewsFailed());
+    } finally {
+      dispatch(loadFilmReviewsRequest(false));
+    }
+  }
+);
+
+const postReviewAction = (id: number, review: ReviewToServer): ThunkActionResult => (
+  async (dispatch, _, api): Promise<void> => {
+    dispatch(postReviewRequest(true));
+    try {
+      await api.post<ReviewToServer>(`/comments/${id}`, review);
+      dispatch(redirectToRoute(`/films/${id}`));
+    } catch (error) {
+      toast.error(errorMessages.genericError);
+    } finally {
+      dispatch(postReviewRequest(false));
+    }
+  }
+);
+
+export {
+  fetchFilms,
+  fetchPromo,
+  checkAuthAction,
+  loginAction,
+  logoutAction,
+  fetchFilmAction,
+  fetchSimilarFilms,
+  fetchFilmReviewsAction,
+  postReviewAction
+};
 

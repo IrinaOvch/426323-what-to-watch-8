@@ -3,7 +3,6 @@ import { Actions, ActionType } from '../types/action';
 import { Film } from '../types/film';
 import { State } from '../types/state';
 import { UserInfo } from '../types/user-info';
-import { adaptFilmsToClient, adaptFilmToClient } from '../utils/adapt-to-client';
 
 const initialState = {
   currentGenre: 'All genres',
@@ -20,6 +19,16 @@ const initialState = {
   isLogoutError: false,
   filmsShownAmount: FILMS_SHOWN_PER_CLICK,
   authorizationStatus: AuthorizationStatus.Unknown,
+  isFilmLoading: false,
+  isFilmError: false,
+  film: {} as Film,
+  isSimilarFilmsLoading: false,
+  isSimilarFilmsError: false,
+  similarFilms: [],
+  isFilmReviewsLoading: false,
+  isFilmReviewsError: false,
+  reviews: [],
+  isReviewPosting: false,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -33,13 +42,13 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.LoadFilmsRequest:
       return { ...state, isFilmsLoading: action.payload };
     case ActionType.LoadFilmsSuccess:
-      return { ...state, films: adaptFilmsToClient(action.payload) };
+      return { ...state, films: action.payload };
     case ActionType.LoadFilmsFailed:
       return { ...state, isFilmsError: true };
     case ActionType.LoadPromoRequest:
       return { ...state, isPromoLoading: action.payload };
     case ActionType.LoadPromoSuccess:
-      return { ...state, promo: adaptFilmToClient(action.payload) };
+      return { ...state, promo: action.payload };
     case ActionType.LoadPromoFailed:
       return { ...state, isPromoError: true };
     case ActionType.RequireLogout:
@@ -58,6 +67,26 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return { ...state, authData: {} as UserInfo };
     case ActionType.LogoutFailed:
       return { ...state, isLogoutError: action.payload };
+    case ActionType.LoadFilmRequest:
+      return { ...state, isFilmLoading: action.payload };
+    case ActionType.LoadFilmSuccess:
+      return { ...state, film: action.payload };
+    case ActionType.LoadFilmFailed:
+      return { ...state, isFilmError: true };
+    case ActionType.LoadSimilarFilmsRequest:
+      return { ...state, isSimilarFilmsLoading: action.payload };
+    case ActionType.LoadSimilarFilmsSuccess:
+      return { ...state, similarFilms: action.payload };
+    case ActionType.LoadSimilarFilmsFailed:
+      return { ...state, isSimilarFilmsError: true };
+    case ActionType.LoadFilmReviewsRequest:
+      return { ...state, isFilmReviewsLoading: action.payload };
+    case ActionType.LoadFilmReviewsSuccess:
+      return { ...state, reviews: action.payload };
+    case ActionType.LoadFilmReviewsFailed:
+      return { ...state, isFilmReviewsError: true };
+    case ActionType.PostReviewRequest:
+      return { ...state, isReviewPosting: action.payload };
     default:
       return state;
   }

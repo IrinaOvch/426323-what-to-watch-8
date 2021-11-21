@@ -1,5 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { Film } from './film';
+import { Review } from './review';
 import { UserInfo } from './user-info';
 
 export type State = {
@@ -17,4 +18,14 @@ export type State = {
   authorizationStatus: AuthorizationStatus;
   isLogoutLoading: boolean;
   isLogoutError: boolean;
+  isFilmLoading: boolean;
+  isFilmError: boolean;
+  film: Film,
+  isSimilarFilmsLoading: boolean;
+  isSimilarFilmsError: boolean;
+  similarFilms: Film[];
+  isFilmReviewsLoading: boolean;
+  isFilmReviewsError: boolean;
+  reviews: Review[],
+  isReviewPosting: boolean;
 };

@@ -48,7 +48,7 @@ function App(props: ConnectedComponentProps): JSX.Element {
           render={() => <MyList films={films} />}
         />
         <Route exact path={AppRoute.Film}>
-          <FilmPage films={films}/>
+          <FilmPage />
         </Route>
         <PrivateRoute
           exact
