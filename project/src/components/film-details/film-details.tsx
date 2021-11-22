@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import { Film } from '../../types/film';
+import { formatRunTime } from '../../utils/format-duration';
 
 type TabDetailsProps = {
   film: Film
@@ -26,7 +26,7 @@ function TabDetails({film}: TabDetailsProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{dayjs(runTime).format('HH[h] mm[m]')}</span>
+          <span className="film-card__details-value">{formatRunTime(runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

@@ -30,7 +30,12 @@ import {
   loadFilmReviewsRequest,
   loadFilmReviewsSuccess,
   loadFilmReviewsFailed,
-  postReviewRequest
+  postReviewRequest,
+  loadMyListRequest,
+  loadMyListSuccess,
+  loadMyListFailed,
+  addToMyListRequest,
+  updateFilmFavouriteStatus
 } from './action';
 import { Review, ReviewToServer } from '../types/review';
 
@@ -47,7 +52,6 @@ const fetchFilms = (): ThunkActionResult => (
     }
   }
 );
-
 
 const fetchPromo = (): ThunkActionResult => (
   async (dispatch, _, api): Promise<void> => {
@@ -70,7 +74,7 @@ const checkAuthAction = (): ThunkActionResult => (
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(loginSuccess(adaptUserToClient(data)));
     } catch {
-      dispatch(redirectToRoute(AppRoute.SignIn));
+      toast.warn('Please, don\'t forget to log in');
     }
   }
 );
@@ -97,13 +101,14 @@ const logoutAction = (): ThunkActionResult => (
   async (dispatch, _, api) => {
     dispatch(logoutRequest(true));
     try {
-      api.delete(APIRoute.Logout);
+      await api.delete(APIRoute.Logout);
       dropToken();
       dispatch(requireLogout());
       dispatch(logoutSuccess());
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
       dispatch(logoutFailed(true));
+      toast.error(errorMessages.logoutFailed);
     } finally {
       dispatch(logoutRequest(false));
     }
@@ -118,6 +123,7 @@ const fetchFilmAction = (id: number): ThunkActionResult => (
       dispatch(loadFilmSuccess(adaptFilmToClient(data)));
     } catch (error) {
       dispatch(loadFilmFailed());
+      dispatch(redirectToRoute(AppRoute.NotFound));
     } finally {
       dispatch(loadFilmRequest(false));
     }
@@ -166,6 +172,34 @@ const postReviewAction = (id: number, review: ReviewToServer): ThunkActionResult
   }
 );
 
+const fetchMyListAction = (): ThunkActionResult => (
+  async (dispatch, _, api): Promise<void> => {
+    dispatch(loadMyListRequest(true));
+    try {
+      const { data } = await api.get<FilmFromServerType[]>(APIRoute.MyList);
+      dispatch(loadMyListSuccess(adaptFilmsToClient(data)));
+    } catch (error) {
+      dispatch(loadMyListFailed());
+    } finally {
+      dispatch(loadMyListRequest(false));
+    }
+  }
+);
+
+const addToMyListAction = (id: number, status: number): ThunkActionResult => (
+  async (dispatch, _, api): Promise<void> => {
+    dispatch(addToMyListRequest(true));
+    try {
+      await api.post(`/favorite/${id}/${status}`);
+      dispatch(updateFilmFavouriteStatus(id, Boolean(status)));
+    } catch (error) {
+      toast.error(errorMessages.genericError);
+    } finally {
+      dispatch(addToMyListRequest(false));
+    }
+  }
+);
+
 export {
   fetchFilms,
   fetchPromo,
@@ -175,6 +209,8 @@ export {
   fetchFilmAction,
   fetchSimilarFilms,
   fetchFilmReviewsAction,
-  postReviewAction
+  postReviewAction,
+  fetchMyListAction,
+  addToMyListAction
 };
 

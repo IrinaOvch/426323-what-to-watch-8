@@ -1,25 +1,25 @@
 import { Link } from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import { State } from '../../types/state';
+import { useDispatch, useSelector} from 'react-redux';
 import SignOutButton from '../sign-out-button/sign-out-button';
 import { AuthorizationStatus } from '../../const';
+import { getAuthData, getAuthorizationStatus } from '../../store/user-process/selectors';
+import { fetchMyListAction } from '../../store/api-actions';
 
-const mapStateToProps = ({authorizationStatus, authData}: State) => ({
-  authorizationStatus,
-  authData,
-});
+function UserBlock(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const authData = useSelector(getAuthData);
 
-const connector = connect(mapStateToProps);
+  const dispatch = useDispatch();
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
+  const handleAvatarClick = () => {
+    dispatch(fetchMyListAction());
+  };
 
-function UserBlock({authorizationStatus, authData}: ConnectedComponentProps): JSX.Element {
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return (
       <ul className="user-block">
         <li className="user-block__item">
-          <Link to="/mylist">
+          <Link to="/mylist" onClick={handleAvatarClick}>
             <div  className="user-block__avatar">
               <img src={authData.avatarUrl} alt="User avatar" width="63" height="63" />
             </div>
@@ -41,5 +41,4 @@ function UserBlock({authorizationStatus, authData}: ConnectedComponentProps): JS
   );
 }
 
-export {UserBlock};
-export default connector(UserBlock);
+export default UserBlock;

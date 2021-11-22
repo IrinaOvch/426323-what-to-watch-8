@@ -1,9 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { postReviewAction } from '../../store/api-actions';
-import { State } from '../../types/state';
+import { getFilmReviewPostingStatus } from '../../store/reviews-data/selectors';
 import RateStar from '../rate-star/rate-star';
 
 const STARS_AMOUNT = 10;
@@ -14,15 +13,8 @@ type PageParams = {
   id: string
 }
 
-const mapStateToProps = ({isReviewPosting}: State) => ({
-  isReviewPosting,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function AddReviewForm({isReviewPosting}: PropsFromRedux): JSX.Element {
+function AddReviewForm(): JSX.Element {
+  const isReviewPosting = useSelector(getFilmReviewPostingStatus);
   const [newReview, setReview] = useState({
     rating: 0,
     comment: '',
@@ -81,5 +73,4 @@ function AddReviewForm({isReviewPosting}: PropsFromRedux): JSX.Element {
     </div>);
 }
 
-export { AddReviewForm };
-export default connector(AddReviewForm);
+export default AddReviewForm;

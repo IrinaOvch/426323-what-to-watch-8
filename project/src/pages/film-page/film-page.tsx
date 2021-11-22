@@ -1,15 +1,14 @@
 import { useParams } from 'react-router-dom';
-import { connect, ConnectedProps } from 'react-redux';
-import { ThunkAppDispatch } from '../../types/action';
+import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FilmsList from '../../components/films-list/films-list';
 import Tabs from '../../components/film-card-tabs/film-card-tabs';
 import FilmActions from '../../components/film-actions/film-actions';
-import { State } from '../../types/state';
 import { fetchFilmAction, fetchFilmReviewsAction, fetchSimilarFilms } from '../../store/api-actions';
 import { useEffect } from 'react';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { getFilm, getFilmErrorStatus, getFilmLoadingStatus, getSimilarFilms, getSimilarFilmsErrorStatus } from '../../store/films-data/selectors';
 import NotFoundScreen from '../page-not-found/page-not-found';
 
 const SIMILAR_AMOUNT = 4;
@@ -18,52 +17,31 @@ type PageParams = {
   id: string
 }
 
-const mapStateToProps = ({film, similarFilms, isFilmLoading}: State) => ({
-  film,
-  similarFilms,
-  isFilmLoading,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onFetchFilm(id: number) {
-    dispatch(fetchFilmAction(id));
-  },
-  onFetchSimilarFilms(id: number) {
-    dispatch(fetchSimilarFilms(id));
-  },
-  onfetchFilmReviews(id: number) {
-    dispatch(fetchFilmReviewsAction(id));
-  },
-});
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-function FilmPage({
-  film,
-  similarFilms,
-  isFilmLoading,
-  onFetchFilm,
-  onFetchSimilarFilms,
-  onfetchFilmReviews,
-}: PropsFromRedux): JSX.Element {
+function FilmPage(): JSX.Element {
   const { id } = useParams<PageParams>();
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    onFetchFilm(Number(id));
-    onFetchSimilarFilms(Number(id));
-    onfetchFilmReviews(Number(id));
+  const dispatch = useDispatch();
 
-  }, [onFetchFilm, onFetchSimilarFilms, onfetchFilmReviews, id]);
+  const film = useSelector(getFilm);
+  const similarFilms = useSelector(getSimilarFilms);
+  const isFilmLoading = useSelector(getFilmLoadingStatus);
+  const isFilmError = useSelector(getFilmErrorStatus);
+  const isSimilarFilmsError = useSelector(getSimilarFilmsErrorStatus);
+
+  if (Object.entries(film).length === 0) {
+    dispatch(fetchFilmAction(Number(id)));
+  }
+
+  useEffect(() => {
+    dispatch(fetchFilmAction(Number(id)));
+    dispatch(fetchSimilarFilms(Number(id)));
+    dispatch(fetchFilmReviewsAction(Number(id)));
+  }, [dispatch, id]);
 
   if (isFilmLoading) {
     return <LoadingScreen />;
   }
 
-  if (!film.id) {
+  if (isFilmError) {
     return <NotFoundScreen/>;
   }
 
@@ -86,7 +64,7 @@ function FilmPage({
                 <span className="film-card__genre">{film.genre}</span>
                 <span className="film-card__year">{film.releaseYear}</span>
               </p>
-              <FilmActions filmId={film.id}/>
+              <FilmActions filmId={film.id} isFavourite={film.isFavourite}/>
             </div>
           </div>
         </div>
@@ -109,6 +87,8 @@ function FilmPage({
           <h2 className="catalog__title">More like this</h2>
 
           <FilmsList films={similarFilms.slice(0, SIMILAR_AMOUNT)}/>
+          {isSimilarFilmsError &&
+          <p>An error ocured while loading similar films, please try reloading the page</p>}
         </section>
         <Footer/>
       </div>
@@ -116,5 +96,4 @@ function FilmPage({
   );
 }
 
-export { FilmPage };
-export default connector(FilmPage);
+export default FilmPage;

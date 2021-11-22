@@ -1,23 +1,16 @@
 import cn from 'classnames/bind';
 import Loader from 'react-loader-spinner';
-import { connect, ConnectedProps } from 'react-redux';
-import { State } from '../../types/state';
+import { useSelector } from 'react-redux';
+import { getLoginLoadingStatus } from '../../store/user-process/selectors';
 import styles from './sign-in-button.module.css';
 
 type SignInButtonProps = {
   isDisabled: boolean;
 }
 
-const mapStateToProps = ({ isLoginLoading }: State) => ({
-  isLoginLoading,
-});
+function SignInButton({ isDisabled }: SignInButtonProps): JSX.Element {
+  const isLoginLoading = useSelector(getLoginLoadingStatus);
 
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & SignInButtonProps;
-
-
-function SignInButton({ isDisabled, isLoginLoading }: ConnectedComponentProps): JSX.Element {
   return (
     <div className="sign-in__submit">
       <button
@@ -40,5 +33,4 @@ function SignInButton({ isDisabled, isLoginLoading }: ConnectedComponentProps): 
   );
 }
 
-export { SignInButton };
-export default connector(SignInButton);
+export default SignInButton;

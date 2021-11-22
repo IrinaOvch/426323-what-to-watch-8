@@ -1,5 +1,4 @@
-import { connect, ConnectedProps } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FilmsList from '../../components/films-list/films-list';
@@ -7,73 +6,46 @@ import GenresList from '../../components/genres-list/genres-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import { getGenres } from '../../utils/getGenres';
 import { getFilmsByGenre } from '../../utils/getFilmsByGenre';
-import { State } from '../../types/state';
 import { incrementFilmsShownAmount, resetFilmsShownAmount } from '../../store/action';
-import { Actions } from '../../types/action';
 import { FILMS_SHOWN_PER_CLICK } from '../../const';
 import { useEffect } from 'react';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import FilmActions from '../../components/film-actions/film-actions';
 import ErrorScreen from '../../components/error-screen/error-screen';
+import { getcurrentGenre, getfilmsShownAmount } from '../../store/films-process/selectors';
+import {
+  getFilms,
+  getFilmsErrorStatus,
+  getFilmsLoadingStatus,
+  getPromo,
+  getPromoErrorStatus,
+  getPromoLoadingStatus
+} from '../../store/films-data/selectors';
 
-const mapStateToProps = ({
-  currentGenre,
-  filmsShownAmount,
-  films,
-  promo,
-  isFilmsLoading,
-  isFilmsError,
-  isPromoLoading,
-  isPromoError,
-}: State) => ({
-  currentGenre,
-  filmsShownAmount,
-  films,
-  promo,
-  isFilmsLoading,
-  isFilmsError,
-  isPromoLoading,
-  isPromoError,
-});
+function MainPage(): JSX.Element {
+  const currentGenre = useSelector(getcurrentGenre);
+  const filmsShownAmount = useSelector(getfilmsShownAmount);
+  const films = useSelector(getFilms);
+  const promo = useSelector(getPromo);
+  const isFilmsLoading = useSelector(getFilmsLoadingStatus);
+  const isFilmsError = useSelector(getFilmsErrorStatus);
+  const isPromoLoading = useSelector(getPromoLoadingStatus);
+  const isPromoError = useSelector(getPromoErrorStatus);
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onFilmsShownAmountChange(amount: number) {
-    dispatch(incrementFilmsShownAmount(amount));
-  },
-  onResetShownAmountChange() {
-    dispatch(resetFilmsShownAmount());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux;
-
-function MainPage({
-  promo,
-  films,
-  currentGenre,
-  filmsShownAmount,
-  onFilmsShownAmountChange,
-  onResetShownAmountChange,
-  isFilmsLoading,
-  isFilmsError,
-  isPromoLoading,
-  isPromoError,
-}: ConnectedComponentProps): JSX.Element {
   const genres = getGenres(films);
   const filteredFilms = getFilmsByGenre(currentGenre, films);
   const renderedFilms = filteredFilms.slice(0, filmsShownAmount);
   const isMoreFilmsToShow = filteredFilms.length > renderedFilms.length;
 
+  const dispatch = useDispatch();
+
   const handleShowMoreButtonClick = () => {
-    onFilmsShownAmountChange(FILMS_SHOWN_PER_CLICK);
+    dispatch(incrementFilmsShownAmount(FILMS_SHOWN_PER_CLICK));
   };
 
   useEffect(() => {
-    onResetShownAmountChange();
-  }, [onResetShownAmountChange, currentGenre]);
+    dispatch(resetFilmsShownAmount());
+  }, [dispatch, currentGenre]);
 
   if (isFilmsLoading || isPromoLoading) {
     return <LoadingScreen/>;
@@ -106,7 +78,7 @@ function MainPage({
                 <span className="film-card__genre">{promo.genre}</span>
                 <span className="film-card__year">{promo.releaseYear}</span>
               </p>
-              <FilmActions filmId={promo.id} />
+              <FilmActions filmId={promo.id} isFavourite={promo.isFavourite}/>
             </div>
           </div>
         </div>
@@ -129,5 +101,4 @@ function MainPage({
   );
 }
 
-export { MainPage };
-export default connector(MainPage);
+export default MainPage;
