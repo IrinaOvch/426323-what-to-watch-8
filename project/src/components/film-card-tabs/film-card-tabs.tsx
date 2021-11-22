@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getFilm } from '../../store/films-data/selectors';
-import { getReviews } from '../../store/reviews-data/selectors';
+import { getFilm } from '../../store/films/selectors';
+import { getReviews } from '../../store/reviews/selectors';
 import FilmCardNavigation from '../film-card-navigation/film-card-navigation';
 import TabDetails from '../film-details/film-details';
 import TabOverview from '../film-overview/film-overview';

@@ -3,11 +3,17 @@ import { useSelector } from 'react-redux';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import { getMyList, getMyListErrorStatus } from '../../store/films-data/selectors';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { getMyList, getMyListErrorStatus, getMyListStatus } from '../../store/films/selectors';
 
 function MyList(): JSX.Element {
   const myList = useSelector(getMyList);
   const isMyListError = useSelector(getMyListErrorStatus);
+  const isMyListLoading = useSelector(getMyListStatus);
+
+  if (isMyListLoading) {
+    return <LoadingScreen/>;
+  }
 
   return (
     <div className="user-page">
@@ -24,7 +30,7 @@ function MyList(): JSX.Element {
         }
         {
           isMyListError &&
-          <p style={{textAlign:'center'}}>An error ocured while loading your list, please try reloading the page.</p>
+          <p style={{textAlign:'center'}}>An error occured while loading your list, please try reloading the page.</p>
         }
       </section>
 

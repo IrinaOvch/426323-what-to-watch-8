@@ -2,7 +2,7 @@ import { useSelector} from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import Header from '../../components/header/header';
-import { getFilms } from '../../store/films-data/selectors';
+import { getFilms } from '../../store/films/selectors';
 
 type PageParams = {
   id: string

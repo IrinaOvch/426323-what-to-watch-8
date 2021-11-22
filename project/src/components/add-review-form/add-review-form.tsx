@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { postReviewAction } from '../../store/api-actions';
-import { getFilmReviewPostingStatus } from '../../store/reviews-data/selectors';
+import { getFilmReviewPostingStatus } from '../../store/reviews/selectors';
 import RateStar from '../rate-star/rate-star';
 
 const STARS_AMOUNT = 10;

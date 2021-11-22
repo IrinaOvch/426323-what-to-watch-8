@@ -6,7 +6,7 @@ import SignInButton from '../../components/sign-in-button/sign-in-button';
 import { loginAction } from '../../store/api-actions';
 import { redirectToRoute } from '../../store/action';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 type FieldProps = {
   value: string;

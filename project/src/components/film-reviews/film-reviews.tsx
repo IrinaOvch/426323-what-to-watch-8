@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { getFilmReviewsErrorStatus } from '../../store/reviews-data/selectors';
+import { getFilmReviewsErrorStatus } from '../../store/reviews/selectors';
 import { Review } from '../../types/review';
 import ReviewElement from '../review/review';
 

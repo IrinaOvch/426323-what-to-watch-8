@@ -1,4 +1,6 @@
 export const FILMS_SHOWN_PER_CLICK = 8;
+export const GENRES_MAX_AMOUNT = 10;
+export const ALL_GENRES = 'All genres';
 
 export enum AppRoute {
   Main = '/',
