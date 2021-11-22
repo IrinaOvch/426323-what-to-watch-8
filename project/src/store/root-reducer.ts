@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { filmsProcess } from './films-process/films-process';
-import { reviewsData } from './reviews-data/reviews-data';
-import { filmsData } from './films-data/films-data';
-import { userProcess } from './user-process/user-process';
+import { filmsProcess } from './app/app';
+import { reviewsData } from './reviews/reviews';
+import { filmsData } from './films/films';
+import { userProcess } from './user/user';
 
 export enum NameSpace {
   Films = 'FILMS',

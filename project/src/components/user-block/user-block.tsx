@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import SignOutButton from '../sign-out-button/sign-out-button';
 import { AuthorizationStatus } from '../../const';
-import { getAuthData, getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthData, getAuthorizationStatus } from '../../store/user/selectors';
 import { fetchMyListAction } from '../../store/api-actions';
 
 function UserBlock(): JSX.Element {

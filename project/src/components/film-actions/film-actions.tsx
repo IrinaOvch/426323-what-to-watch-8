@@ -4,7 +4,7 @@ import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { redirectToRoute } from '../../store/action';
 import { addToMyListAction } from '../../store/api-actions';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 type FilmActionsProps = {
   filmId: number;

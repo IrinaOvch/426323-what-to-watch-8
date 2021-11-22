@@ -12,7 +12,7 @@ import Player from '../../pages/player/player';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/is-checked-auth';
 import browserHistory from '../../browse-history';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
 
 function App(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);

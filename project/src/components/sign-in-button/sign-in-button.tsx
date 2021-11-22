@@ -1,7 +1,7 @@
 import cn from 'classnames/bind';
 import Loader from 'react-loader-spinner';
 import { useSelector } from 'react-redux';
-import { getLoginLoadingStatus } from '../../store/user-process/selectors';
+import { getLoginLoadingStatus } from '../../store/user/selectors';
 import styles from './sign-in-button.module.css';
 
 type SignInButtonProps = {

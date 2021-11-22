@@ -1,6 +1,8 @@
 import { NameSpace } from '../root-reducer';
 import { State } from '../../types/state';
 import { Film } from '../../types/film';
+import { ALL_GENRES, GENRES_MAX_AMOUNT } from '../../const';
+import { createSelector } from 'reselect';
 
 export const getFilmsLoadingStatus = (state: State): boolean => state[NameSpace.Films].isFilmsLoading;
 export const getFilmsErrorStatus = (state: State): boolean => state[NameSpace.Films].isFilmsError;
@@ -17,3 +19,10 @@ export const getSimilarFilms = (state: State): Film[] => state[NameSpace.Films].
 export const getMyListStatus = (state: State): boolean => state[NameSpace.Films].isMyListLoading;
 export const getMyListErrorStatus = (state: State): boolean => state[NameSpace.Films].isMyListError;
 export const getMyList = (state: State): Film[] => state[NameSpace.Films].myList;
+
+export const getGenres = createSelector([getFilms], (films) => {
+  const genres = [...new Set([ALL_GENRES, ...films.map((film) => film.genre)])];
+
+  return genres.slice(0, GENRES_MAX_AMOUNT - 1);
+});
+

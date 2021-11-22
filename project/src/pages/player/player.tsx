@@ -1,12 +1,11 @@
 import { useEffect, useRef, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { getFilm, getFilmErrorStatus, getFilmLoadingStatus } from '../../store/films-data/selectors';
+import { getFilm, getFilmErrorStatus, getFilmLoadingStatus } from '../../store/films/selectors';
 import { fetchFilmAction } from '../../store/api-actions';
 import { formatDuration } from '../../utils/format-duration';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
 import NotFoundScreen from '../page-not-found/page-not-found';
-import cn from 'classnames';
 
 type PageParams = {
   id: string
@@ -20,11 +19,17 @@ function Player(): JSX.Element {
   const history = useHistory();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoState, setVideoState] = useState({
-    isPlaying: true,
+    isPlaying: false,
     progress: 0,
     timeLeft: videoRef?.current?.duration,
   });
 
+  const onCanPlay = () => {
+    setVideoState({
+      ...videoState,
+      isPlaying: true,
+    });
+  };
 
   const dispatch = useDispatch();
 
@@ -92,17 +97,18 @@ function Player(): JSX.Element {
     return <NotFoundScreen/>;
   }
 
+  if (isFilmLoading) {
+    return <LoadingScreen/>;
+  }
+
   return (
     <div className="player">
-      <div className={cn({'visually-hidden': !isFilmLoading})}>
-        <LoadingScreen/>
-      </div>
       <video
         src={activeFilm.videoLink}
         className="player__video"
-        poster={activeFilm.posterImage}
         ref={videoRef}
         onTimeUpdate={handleTimeUpdate}
+        onCanPlay={onCanPlay}
       />
 
       <button type="button" className="player__exit" onClick={handleExitClick}>Exit</button>

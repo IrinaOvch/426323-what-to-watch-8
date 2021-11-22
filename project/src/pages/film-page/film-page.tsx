@@ -8,7 +8,7 @@ import FilmActions from '../../components/film-actions/film-actions';
 import { fetchFilmAction, fetchFilmReviewsAction, fetchSimilarFilms } from '../../store/api-actions';
 import { useEffect } from 'react';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
-import { getFilm, getFilmErrorStatus, getFilmLoadingStatus, getSimilarFilms, getSimilarFilmsErrorStatus } from '../../store/films-data/selectors';
+import { getFilm, getFilmErrorStatus, getFilmLoadingStatus, getSimilarFilms, getSimilarFilmsErrorStatus } from '../../store/films/selectors';
 import NotFoundScreen from '../page-not-found/page-not-found';
 
 const SIMILAR_AMOUNT = 4;
