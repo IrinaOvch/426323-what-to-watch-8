@@ -1,7 +1,7 @@
 import { AuthorizationStatus } from '../const';
 import { RootState } from '../store/root-reducer';
 import { Film } from './film';
-import { Review } from './review';
+import { ReviewType } from './review';
 import { UserInfo } from './user-info';
 
 export type FilmsData = {
@@ -35,7 +35,7 @@ export type UserProcess = {
 export type ReviewsData = {
   isFilmReviewsLoading: boolean;
   isFilmReviewsError: boolean;
-  reviews: Review[],
+  reviews: ReviewType[],
   isReviewPosting: boolean;
 }
 

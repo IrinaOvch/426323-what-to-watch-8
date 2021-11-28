@@ -2,7 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import { ActionType } from '../types/action';
 import { FilmFromServerType } from '../types/film';
-import { Review } from '../types/review';
+import { ReviewType } from '../types/review';
 import { UserInfo } from '../types/user-info';
 
 export const loadFilmsRequest = createAction(
@@ -162,7 +162,7 @@ export const loadFilmReviewsRequest = createAction(
 
 export const loadFilmReviewsSuccess = createAction(
   ActionType.LoadFilmReviewsSuccess,
-  (reviews: Review[]) => ({
+  (reviews: ReviewType[]) => ({
     payload: reviews,
   }),
 );

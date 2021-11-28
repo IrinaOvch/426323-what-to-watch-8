@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import FilmsList from '../../components/films-list/films-list';
-import Tabs from '../../components/film-card-tabs/film-card-tabs';
+import Tabs from '../../components/tabs/tabs';
 import FilmActions from '../../components/film-actions/film-actions';
 import { fetchFilmAction, fetchFilmReviewsAction, fetchSimilarFilms } from '../../store/api-actions';
 import { useEffect } from 'react';

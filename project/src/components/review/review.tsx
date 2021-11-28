@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
-import { Review } from '../../types/review';
+import { ReviewType } from '../../types/review';
 
 type ReviewProps = {
-  review: Review;
+  review: ReviewType;
 }
 
-function ReviewElement({review}: ReviewProps): JSX.Element {
+function Review({review}: ReviewProps): JSX.Element {
   const {comment, user, rating, date} = review;
   return (
     <div className="review">
@@ -23,4 +23,4 @@ function ReviewElement({review}: ReviewProps): JSX.Element {
   );
 }
 
-export default ReviewElement;
+export default Review;

@@ -1,18 +1,17 @@
 import { MouseEvent } from 'react';
 import cn from 'classnames/bind';
-
-const FILM_CARD_TABS = ['Overview', 'Details', 'Reviews'];
+import { FilmCardTabs } from '../tabs/tabs';
 
 type FilmCardNavigationProps = {
   activeTab: string;
-  onTabClick: (evt: MouseEvent<HTMLAnchorElement>, tab: string) => void;
+  onTabClick: (evt: MouseEvent<HTMLAnchorElement>, tab: keyof typeof FilmCardTabs) => void;
 }
 
 function FilmCardNavigation({activeTab, onTabClick}: FilmCardNavigationProps): JSX.Element {
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
-        {FILM_CARD_TABS.map((tab) => {
+        {Object.values(FilmCardTabs).map((tab) => {
           const cls = cn('film-nav__item', {'film-nav__item--active': tab === activeTab});
 
           return (

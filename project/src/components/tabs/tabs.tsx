@@ -3,36 +3,36 @@ import { useSelector } from 'react-redux';
 import { getFilm } from '../../store/films/selectors';
 import { getReviews } from '../../store/reviews/selectors';
 import FilmCardNavigation from '../film-card-navigation/film-card-navigation';
-import TabDetails from '../film-details/film-details';
-import TabOverview from '../film-overview/film-overview';
-import TabReviews from '../film-reviews/film-reviews';
+import TabDetails from '../tab-details/tab-details';
+import TabOverview from '../tab-overview/tab-overview';
+import TabReviews from '../tab-reviews/tab-reviews';
 
-const FilmCardTabs = {
-  OVERVIEW: 'Overview',
-  DETAILS: 'Details',
-  REVIEWS: 'Reviews',
-};
+export const FilmCardTabs = {
+  Overview: 'Overview',
+  Details: 'Details',
+  Reviews: 'Reviews',
+} as const;
 
 function Tabs(): JSX.Element {
   const film = useSelector(getFilm);
   const reviews = useSelector(getReviews);
 
 
-  const [activeTab, setActiveTab] = useState(FilmCardTabs.OVERVIEW);
-  const handleTabClick = (evt: MouseEvent<HTMLAnchorElement>, tab: string) => {
+  const [activeTab, setActiveTab] = useState<keyof typeof FilmCardTabs>(FilmCardTabs.Overview);
+  const handleTabClick = (evt: MouseEvent<HTMLAnchorElement>, tab: keyof typeof FilmCardTabs) => {
     evt.preventDefault();
     setActiveTab(tab);
   };
 
-  useEffect(() => setActiveTab(FilmCardTabs.OVERVIEW), [film.id]);
+  useEffect(() => setActiveTab(FilmCardTabs.Overview), [film.id]);
 
   const renderActiveTab = (type: string) => {
     switch (type) {
-      case FilmCardTabs.OVERVIEW:
+      case FilmCardTabs.Overview:
         return <TabOverview film={film}/>;
-      case FilmCardTabs.DETAILS:
+      case FilmCardTabs.Details:
         return <TabDetails film={film}/>;
-      case FilmCardTabs.REVIEWS:
+      case FilmCardTabs.Reviews:
         return <TabReviews reviews={reviews}/>;
     }
   };

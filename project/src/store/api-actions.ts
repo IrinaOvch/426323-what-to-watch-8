@@ -37,7 +37,7 @@ import {
   addToMyListRequest,
   updateFilmFavouriteStatus
 } from './action';
-import { Review, ReviewToServer } from '../types/review';
+import { ReviewType, ReviewToServer } from '../types/review';
 
 const fetchFilms = (): ThunkActionResult => (
   async (dispatch, _, api): Promise<void> => {
@@ -148,7 +148,7 @@ const fetchFilmReviewsAction = (id: number): ThunkActionResult => (
   async (dispatch, _, api): Promise<void> => {
     dispatch(loadFilmReviewsRequest(true));
     try {
-      const { data } = await api.get<Review[]>(`/comments/${id}`);
+      const { data } = await api.get<ReviewType[]>(`/comments/${id}`);
       dispatch(loadFilmReviewsSuccess(data));
     } catch (error) {
       dispatch(loadFilmReviewsFailed());

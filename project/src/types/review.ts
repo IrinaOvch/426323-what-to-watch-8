@@ -1,4 +1,4 @@
-type Review = {
+type ReviewType = {
   id: number;
   user: {
     id: number;
@@ -14,4 +14,4 @@ type ReviewToServer = {
   comment: string;
 }
 
-export type { Review, ReviewToServer };
+export type { ReviewType, ReviewToServer };
